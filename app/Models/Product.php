@@ -115,4 +115,15 @@ class Product extends Model
                     ->delete();
         return $del;
     }
+
+    public function getInfoProductById($id)
+    {
+        $data = DB::table('product AS p')
+                ->select('p.*', 'dp.*')
+                ->join('detail_product AS dp', 'dp.id_product', '=', 'p.id')
+                ->where('p.id', $id)
+                ->first();
+        $data = json_decode(json_encode($data),true);
+        return $data;
+    }
 }

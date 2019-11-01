@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Trademark;
 use App\Models\TypeTrade;
 use App\Models\DetailProduct;
+use App\Models\Specification;
 use App\Http\Requests\validateCreateProduct;
 
 class ProductAdminController extends Controller
@@ -66,13 +67,14 @@ class ProductAdminController extends Controller
         $data = [];
         $typetrade = $typetrade->getAllData();
         $typetrade = \json_decode(\json_encode($typetrade),true);
-        // $spec = $detail->getAllData();
-        // $spec = \json_decode(\json_encode($spec),true);
+        $spec = $detail->getAllData();
+        $spec = \json_decode(\json_encode($spec),true);
 
         $data['typetrade'] = $typetrade;
-        // $data['spec'] = $spec;
+        $data['spec'] = $spec;
         $data['messages'] = $request->session()->get('messages');
         $data['createProductError'] = $request->session()->get('createProductError');
+        $data['createDetailProductError'] = $request->session()->get('createDetailProductError');
         $data['errImage'] = $request->session()->get('errImage');
         return view('admin.product.create',$data);
     }
@@ -88,14 +90,26 @@ class ProductAdminController extends Controller
         $quant = $request->quantPr;
         $desc = $request->desPr;
 
-        if($request->hasFile('imgPr')){
-            if($request->file('imgPr')->isValid()){
-                $file = $request->file('imgPr');
-                $nameFile = $file->getClientOriginalName();
-                $up = $file->move('Uploads/images',$nameFile);
+        // if($request->hasFile('imgPr')){
+        //     if($request->file('imgPr')->isValid()){
+        //         $file = $request->file('imgPr');
+        //         $nameFile = $file->getClientOriginalName();
+        //         $up = $file->move('Uploads/images',$nameFile);
 
+        //         if(!$up){
+        //             $request->session()->flash('errImage','Lỗi upload ảnh lên server');
+        //             return redirect()->route('admin.createProduct');
+        //         }
+        //     }
+        // }
+
+        if(isset($_FILES['imgPr'])){
+            if($_FILES['imgPr']['error'] == 0){
+                $nameFile = $_FILES['imgPr']['name'];
+                $tmpName  = $_FILES['imgPr']['tmp_name'];
+                $up = move_uploaded_file($tmpName, public_path() . '/Uploads/images/' . $nameFile);
                 if(!$up){
-                    $request->session()->flash('errImage','Lỗi upload ảnh lên server');
+                    $request->session()->flash('errorAvatar', 'Khong upload dc anh len server');
                     return redirect()->route('admin.createProduct');
                 }
             }
@@ -107,24 +121,28 @@ class ProductAdminController extends Controller
             'percent' => $percent,
             'promo_price' => $price - (($price*$percent)/100) ,
             'image' => $nameFile,
-            'status' => 0,
+            'status' => 1,
             'count_view' => 0,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => null
         ];
-        // dd($insertData);
+
         $idProduct = $product->insertProduct($insertData);
         if($idProduct > 0){
-            // $detailProduct = [
-            //     'id_product' => $idProduct,
-            //     'id_specification' => $spec,
-            //     'description' => $desc,
-            //     'quantyti' => $quant
-            // ];
-
-            // $detailInsert = $detail->insertProductDetail();
-            $request->session()->flash('createProductSuccess','Thêm mới sản phẩm thành công');
-            return redirect()->route('admin.product');
+            $detailProduct = [
+                'id_product' => $idProduct,
+                'id_specification' => $spec,
+                'description' => $desc,
+                'quantity' => $quant
+            ];
+            $detailInsert = $detail->insertProductDetail($detailProduct);
+            if($detailInsert){
+                $request->session()->flash('createProductSuccess','Thêm mới sản phẩm thành công');
+                return redirect()->route('admin.product');
+            }else{
+                $request->session()->flash('createDetailProductError','Thêm chi tiết sản phẩm thất bại.Vui lòng kiểm tra lại');
+                return redirect()->route('admin.createProduct');
+            }
         }else{
             $request->session()->flash('createProductError','Thêm mới thất bại.Vui lòng kiểm tra lại');
             return redirect()->route('admin.createProduct');
@@ -146,4 +164,31 @@ class ProductAdminController extends Controller
             echo "Error";
         }
     }
+
+    public function editProduct($id,Product $product, DetailProduct $detail,TypeTrade $typetrade, Specification $spec)
+    {
+        $id = is_numeric($id) ? $id : 0;
+        $infoProduct = $product->getInfoProductById($id);
+
+        if($infoProduct){
+            $data = [];
+            $type = $typetrade->getAllData();
+            $type = \json_decode(json_encode($type),true);
+            $spec = $spec->getAllData();
+            $spec = \json_decode(json_encode($spec),true);
+
+            $data['type'] = $type;
+            $data['spec'] = $spec;
+            $data['info'] = $infoProduct;
+
+            return view('admin.product.edit',$data);
+        }else{
+            about(404);
+        }
+    }
+
+    // public function handleEditProduct()
+    // {
+
+    // }
 }

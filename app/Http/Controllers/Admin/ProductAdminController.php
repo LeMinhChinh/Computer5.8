@@ -62,12 +62,13 @@ class ProductAdminController extends Controller
         return view('admin.product.pc',$data);
     }
 
-    public function createProduct(Request $request,TypeTrade $typetrade, DetailProduct $detail)
+    public function createProduct(Request $request,TypeTrade $typetrade, DetailProduct $detail,Specification $spec)
     {
         $data = [];
-        $typetrade = $typetrade->getAllData();
+        $typetrade = $typetrade->getAllDataTT();
         $typetrade = \json_decode(\json_encode($typetrade),true);
-        $spec = $detail->getAllData();
+        // dd($typetrade);
+        $spec = $spec->getAllData();
         $spec = \json_decode(\json_encode($spec),true);
 
         $data['typetrade'] = $typetrade;
@@ -187,8 +188,57 @@ class ProductAdminController extends Controller
         }
     }
 
-    // public function handleEditProduct()
-    // {
+    public function handleEditProduct(validateEditProduct $request, Product $product, DetailProduct $detail)
+    {
+        $name = $request->namePr;
+        $price = $request->pricePr;
+        $percent = $request->percentPr;
+        $type = $request->typePr;
+        $spec = $request->specPr;
+        $quant = $request->quantPr;
+        $desc = $request->desPr;
 
-    // }
+        $idPr = $request->id;
+        $idPr = is_numeric($idPr) ? $idPr : 0;
+        $infoProduct = $product->getInfoDatPostById($idPr);
+
+        $validator = Validator::make(
+            ['namePr' => $name],
+            ['namePr' => 'unique:product,name,'.$idPr],
+            ['unique' => 'Sản phẩm đã tồn tại']
+        );
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.editProduct',['id' => $idPost])
+                    ->withErrors($validator)
+                    ->withInput();
+        }else{
+            $oldAvatar = $infoProduct['image'];
+            if(isset($_FILES['imgPr'])){
+                if($_FILES['imgPr']['error'] == 0){
+                    $validatorAvatar = Validator::make(
+                        ['imgPr' => $request->file('imgPr')],
+                        ['imgPr' => 'required'],
+                        [
+                            'required' => 'vui long chon anh'
+                        ]
+                    );
+
+                    if($validatorAvatar->fails()){
+                        return redirect()->route('admin.editPost',['slug'=>$slug,'id' => $idPost])
+                                        ->withErrors($validatorAvatar)
+                                        ->withInput();
+                    }else{
+                        $nameFile = $_FILES['imgPr']['name'];
+                        $tmpName  = $_FILES['imgPr']['tmp_name'];
+                        $up = move_uploaded_file($tmpName, public_path() . '/Uploads/images/' . $nameFile);
+                        if(!$up){
+                            $request->session()->flash('errorAvatar', 'Khong upload dc anh len server');
+                            return redirect()->route('admin.createPost');
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

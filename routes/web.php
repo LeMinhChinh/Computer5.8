@@ -52,7 +52,7 @@ Route::group([
     Route::post('handle-create-product', 'ProductAdminController@handleCreateProduct')->name('handleCreateProduct');
     Route::post('delete-product','ProductAdminController@deleteProduct')->name('deleteProduct');
     Route::get('update-product/{id}','ProductAdminController@editProduct')->name('editProduct');
-    // Route::get('handle-update-product/{id}','ProductAdminController@handleEditProduct')->name('handleEditProduct');
+    Route::post('handle-update-product/{id}','ProductAdminController@handleEditProduct')->name('handleEditProduct');
     Route::get('bill','BillController@index')->name('bill');
     Route::get('news','NewsController@index')->name('news');
     Route::get('account','AccountController@account')->name('account');

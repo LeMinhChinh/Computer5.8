@@ -31,7 +31,7 @@ class UserController extends Controller
             $request->session()->put('userSession', $infoUser['username']);
             $request->session()->put('emailSession', $infoUser['email']);
             $request->session()->put('roleSession', $infoUser['role']);
-            return redirect('');
+            return redirect()->route('admin.dashboard');
         }else{
             $request->session()->flash('errLogin','Username or Password invalid');
             return redirect()->route('admin.login');

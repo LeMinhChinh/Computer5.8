@@ -63,7 +63,7 @@
                         <select name="specPr" id="specPr" style="width:280px;margin-left:56px;height:35px;padding-left:15px">
                             <option value="">--- Choose Specification ---</option>
                             @foreach ($spec as $sp)
-                            <option value="{{ $sp['id'] }}">{{ $sp['description'] }}</option>
+                            <option value="{{ $sp['id'] }}">{{ $sp['ram'] }} / {{ $sp['cpu'] }} /  {{ $sp['color'] }} / {{ $sp['operating_system'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -87,7 +87,7 @@
                         <label for="desPr">Description (*)</label>
                         <input type="text" class="form-control" id="desPr" name="desPr">
                     </div>
-                    <button class="btn btn-primary" id="btnConfirm" name="btnConfirm" style="margin-left:40%;margin-bottom:20px">Confirm</button>
+                    <button type="submit" class="btn btn-primary" id="btnConfirm" name="btnConfirm" style="margin-left:40%;margin-bottom:20px">Confirm</button>
                 </div>
         </form>
 @endsection

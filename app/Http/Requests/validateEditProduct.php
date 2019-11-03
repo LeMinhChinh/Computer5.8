@@ -4,20 +4,33 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class validateCreateProduct extends FormRequest
+class validateEditProduct extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
         return [
-            'namePr' => 'required|unique:product,name',
+            'namePr' => 'required',
             'pricePr' => 'required|numeric',
             'percentPr' => 'required|numeric',
-            'imgPr' => 'required'
+            'typePr' => 'required',
+            'specPr' => 'required',
+            'quantPr' => 'quantPr',
+            'desPr' => 'desPr'
         ];
     }
 
@@ -25,7 +38,6 @@ class validateCreateProduct extends FormRequest
     {
         return [
             'namePr.required' => 'Vui lòng nhập tên sản phẩm',
-            'namePr.unique' => 'Sản phẩm đã tồn tại',
 
             'pricePr.required' => 'Vui lòng nhập giá sản phẩm',
             'pricePr.numeric' => 'Giá sản phẩm phải là số',
@@ -33,7 +45,13 @@ class validateCreateProduct extends FormRequest
             'percentPr.required' => 'Vui lòng nhập % giảm giá cho sản phẩm',
             'percentPr.numeric' => 'Giảm giá sản phẩm phải là số',
 
-            'imgPr.required' => 'Vui lòng chọn ảnh cho sản phẩm'
+            'typePr.required' => 'Vui lòng chọn loại sản phẩm',
+
+            'specPr.required' => 'Vui lòng chọn đặc diểm sản phẩm',
+
+            'quantPr.required' => 'Vui lòng nhập số lượng sản phẩm',
+
+            'desPr.required' => 'Vui lòng nhập miêu tả sản phẩm'
         ];
     }
 }

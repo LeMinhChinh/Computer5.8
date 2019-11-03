@@ -16,6 +16,7 @@ class ProductController extends Controller
         $detailPr = \json_decode(json_encode($detailPr),true);
 
         $data['detailPr'] = $detailPr;
+        // dd($detailPr);
 
         return view('home.product.detail',$data);
     }
@@ -34,13 +35,14 @@ class ProductController extends Controller
             return view('home.product.listlaptop',$data);
         }elseif($idtype ==2){
             $listpc = $product->getAllProductByIdType($idtype);
+            $data['paginate'] = $listpc;
             $listpc = json_decode(json_encode($listpc),true);
+            $data['listpc'] = $listpc['data'] ?? [];
 
             $pc = Category::find($idtype);
 
             $data['pc'] = $pc;
-            $data['listpc'] = $listpc;
-            // dd($listpc);
+
             return view('home.product.listpc',$data);
         }
 

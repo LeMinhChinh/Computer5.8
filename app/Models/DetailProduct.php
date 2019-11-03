@@ -12,7 +12,8 @@ class DetailProduct extends Model
     public function getAllData()
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*')
+                    ->select('dp.*','s.ram','s.cpu','s.color','s.operating_system','s.id AS id_spec','s.hard_drive','s.screen','s.battery','s.size','s.weight')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
                     ->get();
         return $data;
     }
@@ -27,6 +28,7 @@ class DetailProduct extends Model
                     ->join('type_product AS t','tt.id_type','=','t.id')
                     ->where('dp.id',$id)
                     ->first();
+                    // dd($data);
         return $data;
     }
 

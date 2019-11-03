@@ -17,4 +17,13 @@ class TypeTrade extends Model
                     ->get();
         return $data;
     }
+    public function getAllDataTT()
+    {
+        $data = DB::table('type_trade AS tt')
+                    ->select('tt.*')
+                    // ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    // ->join('trademark AS tm','tm.id','=','tt.id_trade')
+                    ->get();
+        return $data;
+    }
 }

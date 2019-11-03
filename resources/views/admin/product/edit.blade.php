@@ -9,8 +9,8 @@
             </div>
         </div>
         <div class="col-md-8">
-            <form method="POST" enctype="multipart/form-data">
-                {{-- action="{{ 'admin.handleUpdateProduct',['id' => $info['id']] }}" --}}
+            <form action="{{ 'admin.handleUpdateProduct',['id' => $info['id']] }}" method="POST" enctype="multipart/form-data">
+
                 @csrf
                     <div class="col-12 col-sm-12 col-md-8 col-lg-8 offset-md-1">
                         <div class="form-group">
@@ -55,7 +55,7 @@
                             <label for="desPr">Description (*)</label>
                             <input type="text" class="form-control" id="desPr" name="desPr" value="{{ $info['description'] }}">
                         </div>
-                        <button class="btn btn-primary" id="btnConfirm" name="btnConfirm" style="margin-left:40%;margin-bottom:20px">Confirm</button>
+                        <button type="submit" class="btn btn-primary" id="btnConfirm" name="btnConfirm" style="margin-left:40%;margin-bottom:20px">Confirm</button>
                     </div>
             </form>
         </div>

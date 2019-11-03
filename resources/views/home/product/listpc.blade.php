@@ -51,7 +51,7 @@
                             </div>
                         @endforeach
                     </div>
-                    {{-- {!! $paginate->links() !!} --}}
+                    {!! $paginate->links() !!}
                 </div>
             </div>
         </div>

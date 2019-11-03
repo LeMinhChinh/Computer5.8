@@ -32,6 +32,7 @@ class Product extends Model
                     ->orderBy('created_at','DESC')
                     ->take(6)
                     ->get();
+                    // dd($data);
         return $data;
     }
 
@@ -125,5 +126,13 @@ class Product extends Model
                 ->first();
         $data = json_decode(json_encode($data),true);
         return $data;
+    }
+
+    public function editProduct($data, $id)
+    {
+        $up = DB::table('product')
+                ->where('id',$id)
+                ->update($data);
+        return $up;
     }
 }

@@ -15,6 +15,7 @@ class HomeController extends Controller
         $data = [];
         $lstHotProduct = $product->getAllDataByCreateAt();
         $lstHotProduct = json_decode(json_encode($lstHotProduct),true);
+        // dd($lstHotProduct);
 
         $lstCate = $cate->getAllDataCate();
         $lstCate = json_decode(json_encode($lstCate),true);

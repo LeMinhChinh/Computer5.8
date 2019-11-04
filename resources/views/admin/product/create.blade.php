@@ -36,7 +36,6 @@
         </div>
     @endif
 
-
     @if ($createDetailProductError)
         <div class="alert alert-danger">
             <h6>{{ $createDetailProductError }}</h6>

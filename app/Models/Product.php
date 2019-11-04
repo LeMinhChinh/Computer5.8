@@ -32,7 +32,6 @@ class Product extends Model
                     ->orderBy('created_at','DESC')
                     ->take(6)
                     ->get();
-                    // dd($data);
         return $data;
     }
 

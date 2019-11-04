@@ -29,8 +29,8 @@ class validateEditProduct extends FormRequest
             'percentPr' => 'required|numeric',
             'typePr' => 'required',
             'specPr' => 'required',
-            'quantPr' => 'quantPr',
-            'desPr' => 'desPr'
+            'quantPr' => 'required',
+            'desPr' => 'required'
         ];
     }
 

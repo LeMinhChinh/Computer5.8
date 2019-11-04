@@ -26,9 +26,8 @@ class DetailProduct extends Model
                     ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('type_product AS t','tt.id_type','=','t.id')
-                    ->where('dp.id',$id)
+                    ->where('dp.id_product',$id)
                     ->first();
-                    // dd($data);
         return $data;
     }
 
@@ -39,5 +38,13 @@ class DetailProduct extends Model
     		return true;
     	}
     	return false;
+    }
+
+    public function updateDetailProductById($data, $id)
+    {
+        $up = DB::table('detail_product')
+                ->where('id_product', $id)
+                ->update($data);
+        return $up;
     }
 }

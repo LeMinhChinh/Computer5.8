@@ -22,6 +22,12 @@
 		<div class="alert alert-success my-3">
 			<h6>{{ $createProductSuccess }}</h6>
 		</div>
+    @endif
+
+    @if($updateProductSuccess)
+		<div class="alert alert-success my-3">
+			<h6>{{ $updateProductSuccess }}</h6>
+		</div>
 	@endif
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row">

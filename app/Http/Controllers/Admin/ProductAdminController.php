@@ -11,6 +11,8 @@ use App\Models\TypeTrade;
 use App\Models\DetailProduct;
 use App\Models\Specification;
 use App\Http\Requests\validateCreateProduct;
+use App\Http\Requests\validateEditProduct;
+use Illuminate\Support\Facades\Validator;
 
 class ProductAdminController extends Controller
 {
@@ -28,6 +30,7 @@ class ProductAdminController extends Controller
 
         $data['lstProduct'] = $lstProduct['data'] ?? [];
         $data['createProductSuccess'] = $request->session()->get('createProductSuccess');
+        $data['updateProductSuccess'] = $request->session()->get('updateProductSuccess');
 
         return view('admin.product.product',$data);
     }
@@ -110,7 +113,7 @@ class ProductAdminController extends Controller
                 $tmpName  = $_FILES['imgPr']['tmp_name'];
                 $up = move_uploaded_file($tmpName, public_path() . '/Uploads/images/' . $nameFile);
                 if(!$up){
-                    $request->session()->flash('errorAvatar', 'Khong upload dc anh len server');
+                    $request->session()->flash('errorAvatar', 'Lỗi upload ảnh lên server');
                     return redirect()->route('admin.createProduct');
                 }
             }
@@ -166,7 +169,7 @@ class ProductAdminController extends Controller
         }
     }
 
-    public function editProduct($id,Product $product, DetailProduct $detail,TypeTrade $typetrade, Specification $spec)
+    public function editProduct(Request $request,$id,Product $product,TypeTrade $typetrade, Specification $spec)
     {
         $id = is_numeric($id) ? $id : 0;
         $infoProduct = $product->getInfoProductById($id);
@@ -181,6 +184,9 @@ class ProductAdminController extends Controller
             $data['type'] = $type;
             $data['spec'] = $spec;
             $data['info'] = $infoProduct;
+            $data['messages'] = $request->session()->get('messages');
+            $data['errorAvatar'] = $request->session()->get('errorAvatar');
+            $data['updateProductError'] = $request->session()->get('updateProductError');
 
             return view('admin.product.edit',$data);
         }else{
@@ -197,10 +203,12 @@ class ProductAdminController extends Controller
         $spec = $request->specPr;
         $quant = $request->quantPr;
         $desc = $request->desPr;
+        $stt = $request->sttPr;
+        $stt =  in_array($stt, ['0','1']) ? $stt : 0;
 
         $idPr = $request->id;
         $idPr = is_numeric($idPr) ? $idPr : 0;
-        $infoProduct = $product->getInfoDatPostById($idPr);
+        $infoProduct = $product->getInfoProductById($idPr);
 
         $validator = Validator::make(
             ['namePr' => $name],
@@ -225,19 +233,46 @@ class ProductAdminController extends Controller
                     );
 
                     if($validatorAvatar->fails()){
-                        return redirect()->route('admin.editPost',['slug'=>$slug,'id' => $idPost])
+                        return redirect()->route('admin.editPost',['id' => $idPr])
                                         ->withErrors($validatorAvatar)
                                         ->withInput();
                     }else{
-                        $nameFile = $_FILES['imgPr']['name'];
+                        $oldAvatar = $_FILES['imgPr']['name'];
                         $tmpName  = $_FILES['imgPr']['tmp_name'];
-                        $up = move_uploaded_file($tmpName, public_path() . '/Uploads/images/' . $nameFile);
+                        $up = move_uploaded_file($tmpName, public_path() . '/Uploads/images/' . $oldAvatar);
                         if(!$up){
-                            $request->session()->flash('errorAvatar', 'Khong upload dc anh len server');
-                            return redirect()->route('admin.createPost');
+                            $request->session()->flash('errorAvatar', 'Lỗi upload ảnh lên server');
+                            return redirect()->route('admin.editProduct');
                         }
                     }
                 }
+            }
+
+            $dataUpdate = [
+                'id_typetrade' => $type,
+                'name' => $name,
+                'price' => $price,
+                'percent' => $percent,
+                'promo_price' => $price - (($price*$percent)/100) ,
+                'image' => $oldAvatar,
+                'status' => $stt,
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+
+            $update = $product->editProduct($dataUpdate, $idPr);
+            if($update){
+                $updateDetail = [
+                    'quantity' => $quant,
+                    'description' => $desc,
+                    'id_specification' => $spec
+                ];
+                $updateDetail = $detail->updateDetailProductById($updateDetail, $idPr);
+
+                $request->session()->flash('updateProductSuccess', 'Cập nhật sản phẩm thành công');
+                return redirect()->route('admin.product');
+            }else{
+                $request->session()->flash('updateProductError', 'Cập nhật sản phẩm thất bại.Vui lòng kiểm tra lại');
+                return redirect()->route('admin.editProduct',['id' => $idPost]);
             }
         }
     }

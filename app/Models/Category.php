@@ -20,7 +20,7 @@ class Category extends Model
     public function getDataName()
     {
         $data = DB::table('type_product AS tp')
-                    ->select('tp.*','tt.id_type','tt.name_type AS name_cate')
+                    ->select('tp.*','tt.id_type','tt.name_type AS name_cate','tt.id_trade','tm.name_trade')
                     ->join('type_trade AS tt','tt.id_type','=','tp.id')
                     ->join('trademark AS tm','tt.id_trade','=','tm.id')
                     ->get();

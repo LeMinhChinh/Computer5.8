@@ -9,28 +9,40 @@
     </ol>
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row">
-            {{-- <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                <a href="" class="btn btn-primary">Create New Product</a>
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                 <a href="" class="btn btn-primary">View All</a>
-            </div> --}}
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Searching..." id="js-keyword" >
-                        {{-- value="{{ $keyword }}" value of input--}}
-                        <div class="input-group-append">
-                            <button class="input-group-text" id="js-search">Search</button>
-                        </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="js-search">
+                        <i class="fas fa-search"></i>
+                        </button>
                     </div>
+                </div>
             </div>
         </div>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 
-
+        @if ($updateAccountSuccess)
+            <div class="alert alert-danger">
+                <h6>{{ $updateAccountSuccess }}</h6>
+            </div>
+        @endif
         <table class="table table-border table-striped table-hover mt-2">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th style="width:110px">User name</th>
-                    {{-- <th>Password</th> --}}
                     <th>Email</th>
                     <th>Full name</th>
                     <th style="width:136px">Phone number</th>
@@ -44,14 +56,11 @@
             </thead>
             <tbody>
                 @foreach ($lstAccount as $key => $account)
-                    <tr>
+                    <tr class="js-account-{{ $account['id'] }}">
                         <td>{{ $account['id'] }}</td>
                         <td>
                             <p>{{ $account['username'] }}</p>
                         </td>
-                        {{-- <td>
-                            <p>{{ $account['password'] }}</p>
-                        </td> --}}
                         <td>
                             <p>{{ $account['email'] }}</p>
                         </td>
@@ -85,17 +94,46 @@
                             @endif
                         </td>
                         <td>
-                            <button id="{{ $account['id'] }}" class="btn btn-sm btn-danger js-delete-post">Delete</button>
+                            <a href="{{ route('admin.editAccount',['id' => $account['id']]) }}" class="btn btn-info btn-sm">Update</a>
                         </td>
                         <td>
-                            <a href="" class="btn btn-info btn-sm">Edit</a>
+                            <button id="{{ $account['id'] }}" class="btn btn-sm btn-danger js-delete-account">Delete</button>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
         {{-- {{ $paginate->appends(request()->query())->links() }} --}}
         {{-- {{ $paginate->links() }} --}}
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function(){
+            $('.js-delete-account').click(function() {
+                var self = $(this);
+                var idAccount = self.attr('id').trim();
+                if($.isNumeric(idAccount)){
+                    $.ajax({
+                        url: "{{ route('admin.deleteAccount') }}",
+                        type: "POST",
+                        data: {id: idAccount},
+                        beforeSend: function(){
+                            self.text('Loading ...');
+                        },
+                        success: function(data){
+                            self.text('Delete');
+                            if(data === 'Error' || data === 'Fail'){
+                                alert('Có lỗi xảy ra')
+                            } else {
+                                $('.js-account-'+idAccount).hide();
+                                alert('Xóa tài khoản thành công');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+@endpush

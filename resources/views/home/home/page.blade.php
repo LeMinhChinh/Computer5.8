@@ -16,14 +16,49 @@
                             <a href="{{ route('user.listproduct',['idtype' => $cate['id']]) }}">{{ $cate['type'] }}</a>
                             <i class="fa fa-angle-right" aria-hidden="true"></i>
                             <ul class="mnboxl_1">
-                                @foreach ($lstName as $name)
-                                    @if($cate['id'] == $name['id_type'])
-                                        <li><a href="">{{ $name['name_cate'] }}</a></li>
-                                    @endif
-                                @endforeach
+                                    @foreach ($lstName as $name)
+                                        @if($cate['id'] == $name['id_type'])
+                                            <li><a href="{{ route('user.filterproduct',['idtype' => $name['id_type'],'idtrade' => $name['id_trade']]) }}">{{ $name['type'] }} {{ $name['name_trade'] }}</a></li>
+                                        @endif
+                                    @endforeach
                             </ul>
                         </li>
                         @endforeach
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Máy tính chơi game</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Màn hình máy tính</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Gaming Gear</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Linh phụ kiện</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Thiết bị mạng</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -50,15 +50,15 @@
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button" id="js-search">
-                            <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button" id="js-search">
+                        <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
+            </div>
         </div>
 
 
@@ -79,7 +79,7 @@
             </thead>
             <tbody>
                 @foreach ($lstProduct as $key => $product)
-                    <tr>
+                    <tr class="js-product-{{ $product['id'] }}">
                         <td>{{ $product['id'] }}</td>
                         <td>
                             <p>{{ $product['name'] }}</p>
@@ -111,7 +111,7 @@
                             <a href="{{ route('admin.editProduct',['id' => $product['id']]) }}" class="btn btn-info btn-sm">Update</a>
                         </td>
                         <td>
-                            <button id="{{ $product['id'] }}" class="btn btn-sm btn-danger js-delete-post">Delete</button>
+                            <button id="{{ $product['id'] }}" class="btn btn-sm btn-danger js-delete-product">Delete</button>
                         </td>
                     </tr>
                 @endforeach
@@ -125,28 +125,28 @@
 
 @push('scripts')
     <script>
-            $(function(){
-                $('.js-delete-post').click(function() {
+        $(function(){
+            $('.js-delete-product').click(function() {
                 var self = $(this);
                 var idProduct = self.attr('id').trim();
                 if($.isNumeric(idProduct)){
-                $.ajax({
-                    url: "{{ route('admin.deleteProduct') }}",
-                    type: "POST",
-                    data: {id: idProduct},
-                    beforeSend: function(){
-                        self.text('Loading ...');
-                    },
-                    success: function(data){
-                        self.text('Delete');
-                        if(data === 'Error' || data === 'Fail'){
-                            alert('co loi xay ra')
-                        } else {
-                            $('.js-post-'+idProduct).hide();
-                            alert('Thanh cong');
+                    $.ajax({
+                        url: "{{ route('admin.deleteProduct') }}",
+                        type: "POST",
+                        data: {id: idProduct},
+                        beforeSend: function(){
+                            self.text('Loading ...');
+                        },
+                        success: function(data){
+                            self.text('Delete');
+                            if(data === 'Error' || data === 'Fail'){
+                                alert('Có lỗi xảy ra')
+                            } else {
+                                $('.js-product-'+idProduct).hide();
+                                alert('Xóa sản phẩm thành công');
+                            }
                         }
-                    }
-                });
+                    });
                 }
             });
 

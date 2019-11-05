@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\DetailProduct;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Trademark;
 
 class ProductController extends Controller
 {
@@ -33,7 +34,7 @@ class ProductController extends Controller
             $data['laptop'] = $laptop;
 
             return view('home.product.listlaptop',$data);
-        }elseif($idtype ==2){
+        }{
             $listpc = $product->getAllProductByIdType($idtype);
             $data['paginate'] = $listpc;
             $listpc = json_decode(json_encode($listpc),true);
@@ -45,6 +46,35 @@ class ProductController extends Controller
 
             return view('home.product.listpc',$data);
         }
+    }
 
+    public function fiterproduct($idtype, $idtrade, Product $product, Category $cate, Trademark $trade)
+    {
+        if($idtype ==1){
+            $listlpName = $product->getAllLaptopByTypeTrade($idtrade);
+            $listlpName = \json_decode(\json_encode($listlpName),true);
+
+            $laptopType = Category::find($idtype);
+            $laptopTrade = Trademark::find($idtrade);
+
+            $data['laptopType'] = $laptopType;
+            $data['laptopTrade'] = $laptopTrade;
+            $data['listlpName'] = $listlpName;
+
+            return view('home.product.listlpname',$data);
+        }elseif($idtype ==2){
+            $listpcName = $product->getAllPCByTypeTrade($idtrade);
+            $listpcName = \json_decode(\json_encode($listpcName),true);
+
+            $laptopType = Category::find($idtype);
+            $laptopTrade = Trademark::find($idtrade);
+
+            $data['laptopType'] = $laptopType;
+            $data['laptopTrade'] = $laptopTrade;
+
+            $data['listpcName'] = $listpcName;
+
+            return view('home.product.listpcname',$data);
+        }
     }
 }

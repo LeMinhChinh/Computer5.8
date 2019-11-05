@@ -16,4 +16,15 @@ class Specification extends Model
                     ->get();
         return $data;
     }
+
+    public function insertDataSpec($data)
+    {
+        $insert = DB::table('specification')->insert($data);
+
+        if($insert){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

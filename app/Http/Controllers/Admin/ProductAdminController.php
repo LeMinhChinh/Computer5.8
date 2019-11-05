@@ -81,6 +81,7 @@ class ProductAdminController extends Controller
         $data['messages'] = $request->session()->get('messages');
         $data['createProductError'] = $request->session()->get('createProductError');
         $data['createDetailProductError'] = $request->session()->get('createDetailProductError');
+        $data['createSpecSuccess'] = $request->session()->get('createSpecSuccess');
         $data['errImage'] = $request->session()->get('errImage');
         return view('admin.product.create',$data);
     }
@@ -210,7 +211,7 @@ class ProductAdminController extends Controller
 
         $idPr = $request->id;
         $idPr = is_numeric($idPr) ? $idPr : 0;
-        $infoProduct = $product->getInfoProductById($idPr);
+
 
         $validator = Validator::make(
             ['namePr' => $name],
@@ -278,48 +279,4 @@ class ProductAdminController extends Controller
             }
         }
     }
-
-    public function editDetail(Request $request,$id,Product $product, Specification $spec)
-    {
-        $id = is_numeric($id) ? $id : 0;
-        $infoDetail = $product->getInfoProductById($id);
-
-        if($infoDetail){
-            $data = [];
-            $spec = $spec->getAllData();
-            $spec = \json_decode(json_encode($spec),true);
-
-            $data['spec'] = $spec;
-            $data['info'] = $infoDetail;
-            $data['messages'] = $request->session()->get('messages');
-
-            return view('admin.product.editDetail',$data);
-        }else{
-            about(404);
-        }
-    }
-
-    // public function handleEditDetail(validateEditDetail $request,Product $product, Specification $spec,  DetailProduct $detail)
-    // {
-    //     $name = $request->namePr;
-    //     $spec = $request->specPr;
-
-    //     $idPr = $request->id;
-    //     $idPr = is_numeric($idPr) ? $idPr : 0;
-    //     $infoProduct = $product->getInfoProductById($idPr);
-
-    //     $dataUpdate = [
-    //         'name' => $name,
-    //         'updated_at' => date('Y-m-d H:i:s')
-    //     ];
-
-    //     $update = $product->editDetail($dataUpdate, $idPr);
-    //     if($update){
-    //         $updateDetail = [
-    //             'quantity' => $quant,
-    //             'description' => $desc,
-    //             'id_specification' => $spec
-    //         ];
-    //     }
-    // }
 }

@@ -39,4 +39,30 @@ class User extends Model
         $id = DB::getPdo()->lastInsertId();
         return $id;
     }
+
+    public function getInfoDataById($id)
+    {
+        $data = DB::table('account AS a')
+                    ->select('a.*')
+                    ->where('a.id',$id)
+                    ->first();
+        $data = \json_decode(json_encode($data),true);
+        return $data;
+    }
+
+    public function updateAccountById($data, $id)
+    {
+        $up = DB::table('account AS a')
+                    ->where('a.id',$id)
+                    ->update($data);
+        return $up;
+    }
+
+    public function deleteAccountById($id)
+    {
+        $del = DB::table('account')
+                    ->where('id', $id)
+                    ->delete();
+        return $del;
+    }
 }

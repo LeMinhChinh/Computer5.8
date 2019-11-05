@@ -22,7 +22,7 @@ class validateRegister extends FormRequest
             'txtPhone' => 'required',
             'txtBirth' => 'required',
             'txtAddress' => 'required',
-            'gender' => 'required|in:1,0'
+            'gender' => 'required'
         ];
     }
 
@@ -48,8 +48,7 @@ class validateRegister extends FormRequest
 
             'txtAddress.required' => "Vui lòng nhập địa chỉ",
 
-            'gender.required' => "Vui lòng chọn giới tính",
-            'gender.in' => "Lựa chọn không tồn tại"
+            'gender.required' => "Vui lòng chọn giới tính"
         ];
     }
 }

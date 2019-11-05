@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class validateEditDetail extends FormRequest
+class validateUpdateAccount extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,16 +24,16 @@ class validateEditDetail extends FormRequest
     public function rules()
     {
         return [
-            'namePr' => 'required',
-            'specPr' => 'required'
+            'roleAcc' => 'required',
+            'sttAcc' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'namePr.required' => 'Tên sản phẩm không được để trống',
-            'specPr.required' => 'Vui lòng chọn thông số sản phẩm'
+            'roleAcc.required' => 'Vui lòng chọn role',
+            'sttAcc.required' => 'Vui lòng chọn status'
         ];
     }
 }

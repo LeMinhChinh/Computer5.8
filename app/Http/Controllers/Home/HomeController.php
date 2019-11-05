@@ -37,4 +37,9 @@ class HomeController extends Controller
 
         return view('home.home.page',$data);
     }
+
+    public function errorpage()
+    {
+        return view('home.home.error');
+    }
 }

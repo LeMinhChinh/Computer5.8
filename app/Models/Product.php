@@ -70,6 +70,32 @@ class Product extends Model
         return $data;
     }
 
+    public function getAllLaptopByTypeTrade($idtrade)
+    {
+        $data = DB::table('product AS p')
+                    ->select('p.*')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('trademark AS tm','tm.id','=','tt.id_trade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->where('tp.id',1)
+                    ->where('tm.id',$idtrade)
+                    ->get();
+        return $data;
+    }
+
+    public function getAllPCByTypeTrade($idtrade)
+    {
+        $data = DB::table('product AS p')
+                    ->select('p.*')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('trademark AS tm','tm.id','=','tt.id_trade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->where('tp.id',2)
+                    ->where('tm.id',$idtrade)
+                    ->get();
+        return $data;
+    }
+
     public function getAllLaptopAdmin($keyword = '')
     {
         $data = DB::table('product AS p')
@@ -112,7 +138,7 @@ class Product extends Model
 
     public function deleteProduct($id)
     {
-        $delete = DB::table('product')
+        $del = DB::table('product')
                     ->where('id', $id)
                     ->delete();
         return $del;
@@ -135,17 +161,5 @@ class Product extends Model
                 ->where('id',$id)
                 ->update($data);
         return $up;
-    }
-
-    public function getInfoDetail($id)
-    {
-        $data = DB::table('product AS p')
-                ->select('p.id', 'p.name','p.image','s.*')
-                ->join('detail_product AS dp', 'dp.id_product', '=', 'p.id')
-                ->join('specification AS s','s.id','=','dp.id_specification')
-                ->where('p.id', $id)
-                ->first();
-        $data = json_decode(json_encode($data),true);
-        return $data;
     }
 }

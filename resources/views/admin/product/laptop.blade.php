@@ -37,7 +37,6 @@
                     <th>Operating System</th>
                     <th>Size</th>
                     <th>Weight</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -73,9 +72,6 @@
                         </td>
                         <td>
                             <p>{{ $laptop['weight'] }}</p>
-                        </td>
-                        <td>
-                            <a href="{{  route('admin.editDetail',['id' => $laptop['id']]) }}" class="btn btn-sm btn-primary">Update</a>
                         </td>
                     </tr>
                 @endforeach

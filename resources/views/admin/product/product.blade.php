@@ -108,7 +108,7 @@
                         </td>
                         <td>{{ $product['quantity'] }}</td>
                         <td>
-                            <a href="{{ route('admin.editProduct',['id' => $product['id']]) }}" class="btn btn-info btn-sm">Edit</a>
+                            <a href="{{ route('admin.editProduct',['id' => $product['id']]) }}" class="btn btn-info btn-sm">Update</a>
                         </td>
                         <td>
                             <button id="{{ $product['id'] }}" class="btn btn-sm btn-danger js-delete-post">Delete</button>

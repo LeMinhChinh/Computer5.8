@@ -12,6 +12,7 @@ use App\Models\DetailProduct;
 use App\Models\Specification;
 use App\Http\Requests\validateCreateProduct;
 use App\Http\Requests\validateEditProduct;
+use App\Http\Requests\validateEditDetail;
 use Illuminate\Support\Facades\Validator;
 
 class ProductAdminController extends Controller
@@ -44,6 +45,7 @@ class ProductAdminController extends Controller
         $lstLaptop = $laptop->getAllLaptopAdmin($keyword);
         $data['paginate'] = $lstLaptop;
         $lstLaptop = \json_decode(json_encode($lstLaptop),true);
+        // dd($lstLaptop);
 
         $data['lstLaptop'] = $lstLaptop['data'] ?? [];
 
@@ -276,4 +278,48 @@ class ProductAdminController extends Controller
             }
         }
     }
+
+    public function editDetail(Request $request,$id,Product $product, Specification $spec)
+    {
+        $id = is_numeric($id) ? $id : 0;
+        $infoDetail = $product->getInfoProductById($id);
+
+        if($infoDetail){
+            $data = [];
+            $spec = $spec->getAllData();
+            $spec = \json_decode(json_encode($spec),true);
+
+            $data['spec'] = $spec;
+            $data['info'] = $infoDetail;
+            $data['messages'] = $request->session()->get('messages');
+
+            return view('admin.product.editDetail',$data);
+        }else{
+            about(404);
+        }
+    }
+
+    // public function handleEditDetail(validateEditDetail $request,Product $product, Specification $spec,  DetailProduct $detail)
+    // {
+    //     $name = $request->namePr;
+    //     $spec = $request->specPr;
+
+    //     $idPr = $request->id;
+    //     $idPr = is_numeric($idPr) ? $idPr : 0;
+    //     $infoProduct = $product->getInfoProductById($idPr);
+
+    //     $dataUpdate = [
+    //         'name' => $name,
+    //         'updated_at' => date('Y-m-d H:i:s')
+    //     ];
+
+    //     $update = $product->editDetail($dataUpdate, $idPr);
+    //     if($update){
+    //         $updateDetail = [
+    //             'quantity' => $quant,
+    //             'description' => $desc,
+    //             'id_specification' => $spec
+    //         ];
+    //     }
+    // }
 }

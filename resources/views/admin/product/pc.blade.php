@@ -5,7 +5,7 @@
         <li class="breadcrumb-item">
             <a href="{{ route('admin.product') }}" style="text-decoration:none">Product</a>
         </li>
-        <li class="breadcrumb-item active">Laptop</li>
+        <li class="breadcrumb-item active">PC</li>
         <li class="breadcrumb-item active">Overview</li>
     </ol>
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -29,44 +29,55 @@
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Trademark</th>
-                    <th>Price</th>
-                    <th>Percent</th>
-                    <th>Price promo</th>
-                    <th>Image</th>
-                    <th>Quantity</th>
-                    <th colspan="2">Action</th>
+                    <th>Ram</th>
+                    <th>CPU</th>
+                    <th>Hard Drive</th>
+                    <th>Color</th>
+                    <th>Screen</th>
+                    <th>Battery</th>
+                    <th>Operating System</th>
+                    <th>Size</th>
+                    <th>Weight</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($lstPc as $key => $pc)
                     <tr>
-                        <td>{{ $pc['id'] }}</td>
-                        <td>
-                            <p>{{ $pc['name'] }}</p>
-                        </td>
-                        <td>
-                            <p>{{ $pc['name_trade'] }}</p>
-                        </td>
-                        <td>
-                            <p>{{ $pc['price'] }}</p>
-                        </td>
-                        <td>
-                            <p>{{ $pc['percent'] }}%</p>
-                        </td>
-                        <td>
-                            <p>{{ $pc['promo_price'] }}</p>
-                        </td>
-                        <td>
-                            <img src="{{ URL::to('/') }}/Uploads/images/{{ $pc['image'] }}" alt="" width="120" height="120" class="img-fluid">
-                        </td>
-                        <td>{{ $pc['quantity'] }}</td>
-                        <td>
-                            <a href="" class="btn btn-info btn-sm">Edit Detail</a>
-                        </td>
-                        <td>
-                            <button id="" class="btn btn-sm btn-danger js-delete-post">Insert Detail</button>
-                        </td>
+                            <td>{{ $pc['id'] }}</td>
+                            <td>
+                                <p>{{ $pc['name'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['ram'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['cpu'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['hard_drive'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['color'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['screen'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['battery'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['operating_system'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['size'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['weight'] }}</p>
+                            </td>
+                            <td>
+                                <button id="" class="btn btn-sm btn-primary">Update</button>
+                            </td>
                     </tr>
                 @endforeach
             </tbody>

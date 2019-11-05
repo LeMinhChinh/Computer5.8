@@ -5,7 +5,7 @@
         <li class="breadcrumb-item">
             <a href="{{ route('admin.product') }}">Product</a>
         </li>
-        <li class="breadcrumb-item active">Create Product</li>
+        <li class="breadcrumb-item active">Update Product</li>
     </ol>
 
     @if ($errors->any())

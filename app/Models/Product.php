@@ -73,11 +73,12 @@ class Product extends Model
     public function getAllLaptopAdmin($keyword = '')
     {
         $data = DB::table('product AS p')
-                    ->select('p.*','tt.id_type','tm.name_trade','dp.quantity')
+                    ->select('p.id','p.name','tt.id_type','tm.name_trade','dp.quantity','s.ram','s.cpu','s.color','s.screen','s.hard_drive','s.battery','s.operating_system','s.size','s.weight')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('type_product AS tp','tp.id','=','tt.id_type')
                     ->join('trademark AS tm','tm.id','=','tt.id_trade')
                     ->join('detail_product AS dp','dp.id_product','=','p.id')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
                     ->where('p.name', 'like', '%'.$keyword.'%')
                     ->where('tt.id_type',1)
                     ->orderBy('p.id','ASC')
@@ -88,11 +89,12 @@ class Product extends Model
     public function getAllPcAdmin($keyword = '')
     {
         $data = DB::table('product AS p')
-                    ->select('p.*','tt.id_type','tm.name_trade','dp.quantity')
+                    ->select('p.id','p.name','tt.id_type','tm.name_trade','dp.quantity','s.ram','s.cpu','s.color','s.screen','s.hard_drive','s.battery','s.operating_system','s.size','s.weight')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('type_product AS tp','tp.id','=','tt.id_type')
                     ->join('trademark AS tm','tm.id','=','tt.id_trade')
                     ->join('detail_product AS dp','dp.id_product','=','p.id')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
                     ->where('tt.id_type',2)
                     ->where('p.name', 'like', '%'.$keyword.'%')
                     ->orderBy('p.id','ASC')
@@ -133,5 +135,17 @@ class Product extends Model
                 ->where('id',$id)
                 ->update($data);
         return $up;
+    }
+
+    public function getInfoDetail($id)
+    {
+        $data = DB::table('product AS p')
+                ->select('p.id', 'p.name','p.image','s.*')
+                ->join('detail_product AS dp', 'dp.id_product', '=', 'p.id')
+                ->join('specification AS s','s.id','=','dp.id_specification')
+                ->where('p.id', $id)
+                ->first();
+        $data = json_decode(json_encode($data),true);
+        return $data;
     }
 }

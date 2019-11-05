@@ -23,19 +23,21 @@
             </div>
         </div>
 
-
         <table class="table table-border table-striped table-hover mt-2">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
-                    <th>Trademark</th>
-                    <th>Price</th>
-                    <th>Percent</th>
-                    <th>Price promo</th>
-                    <th>Image</th>
-                    <th>Quantity</th>
-                    <th colspan="2">Action</th>
+                    <th>Ram</th>
+                    <th>CPU</th>
+                    <th>Hard Drive</th>
+                    <th>Color</th>
+                    <th>Screen</th>
+                    <th>Battery</th>
+                    <th>Operating System</th>
+                    <th>Size</th>
+                    <th>Weight</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,26 +48,34 @@
                             <p>{{ $laptop['name'] }}</p>
                         </td>
                         <td>
-                            <p>{{ $laptop['name_trade'] }}</p>
+                            <p>{{ $laptop['ram'] }}</p>
                         </td>
                         <td>
-                            <p>{{ $laptop['price'] }}</p>
+                            <p>{{ $laptop['cpu'] }}</p>
                         </td>
                         <td>
-                            <p>{{ $laptop['percent'] }}%</p>
+                            <p>{{ $laptop['hard_drive'] }}</p>
                         </td>
                         <td>
-                            <p>{{ $laptop['promo_price'] }}</p>
+                            <p>{{ $laptop['color'] }}</p>
                         </td>
                         <td>
-                            <img src="{{ URL::to('/') }}/Uploads/images/{{ $laptop['image'] }}" alt="" width="120" height="120" class="img-fluid">
-                        </td>
-                        <td>{{ $laptop['quantity'] }}</td>
-                        <td>
-                            <a href="" class="btn btn-info btn-sm">Edit Detail</a>
+                            <p>{{ $laptop['screen'] }}</p>
                         </td>
                         <td>
-                            <button id="" class="btn btn-sm btn-danger js-delete-post">Insert Detail</button>
+                            <p>{{ $laptop['battery'] }}</p>
+                        </td>
+                        <td>
+                            <p>{{ $laptop['operating_system'] }}</p>
+                        </td>
+                        <td>
+                            <p>{{ $laptop['size'] }}</p>
+                        </td>
+                        <td>
+                            <p>{{ $laptop['weight'] }}</p>
+                        </td>
+                        <td>
+                            <a href="{{  route('admin.editDetail',['id' => $laptop['id']]) }}" class="btn btn-sm btn-primary">Update</a>
                         </td>
                     </tr>
                 @endforeach

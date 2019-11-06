@@ -42,4 +42,19 @@ class HomeController extends Controller
     {
         return view('home.home.error');
     }
+
+    public function navigation(Category $cate)
+    {
+        $data = [];
+
+        $lstCate = $cate->getAllDataCate();
+        $lstCate = json_decode(json_encode($lstCate),true);
+
+        $lstName = $cate->getDataName();
+        $lstName = json_decode(json_encode($lstName),true);
+
+        $data['lstCate'] = $lstCate;
+        $data['lstName'] = $lstName;
+        return view('home.partials.nav',$data);
+    }
 }

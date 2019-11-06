@@ -211,6 +211,7 @@ class ProductAdminController extends Controller
 
         $idPr = $request->id;
         $idPr = is_numeric($idPr) ? $idPr : 0;
+        $infoProduct = $product->getInfoProductById($idPr);
 
 
         $validator = Validator::make(

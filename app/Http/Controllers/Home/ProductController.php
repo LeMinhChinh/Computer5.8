@@ -50,6 +50,7 @@ class ProductController extends Controller
 
     public function fiterproduct($idtype, $idtrade, Product $product, Category $cate, Trademark $trade)
     {
+
         if($idtype ==1){
             $listlpName = $product->getAllLaptopByTypeTrade($idtrade);
             $listlpName = \json_decode(\json_encode($listlpName),true);

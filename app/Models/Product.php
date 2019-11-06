@@ -26,8 +26,9 @@ class Product extends Model
     public function getAllDataByCreateAt()
     {
         $data = DB::table('product AS p')
-                    ->select('p.*','tt.id_type')
+                    ->select('p.*','tt.id_type','dp.quantity')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('detail_product AS dp','dp.id_product','=','p.id')
                     ->where('p.status',1)
                     ->orderBy('created_at','DESC')
                     ->take(6)
@@ -38,9 +39,10 @@ class Product extends Model
     public function getAllDataLaptop()
     {
         $data = DB::table('product AS p')
-                    ->select('p.*','tt.id_type')
+                    ->select('p.*','tt.id_type','dp.quantity')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->join('detail_product AS dp','dp.id_product','=','p.id')
                     ->where('tt.id_type',1)
                     ->take(8)
                     ->get();
@@ -50,9 +52,10 @@ class Product extends Model
     public function getAllDataPC()
     {
         $data = DB::table('product AS p')
-                    ->select('p.*','tt.id_type')
+                    ->select('p.*','tt.id_type','dp.quantity')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->join('detail_product AS dp','dp.id_product','=','p.id')
                     ->where('tt.id_type',2)
                     ->take(8)
                     ->get();
@@ -161,5 +164,16 @@ class Product extends Model
                 ->where('id',$id)
                 ->update($data);
         return $up;
+    }
+
+    public function addProductToCart($id)
+    {
+        $data = DB::table('product AS p')
+                    ->select('p.*','dp.quantity','s.ram','s.cpu','s.color')
+                    ->join('detail_product AS dp','dp.id_product','=','p.id')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->where('p.id',$id)
+                    ->first();
+        return $data;
     }
 }

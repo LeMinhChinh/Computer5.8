@@ -9,7 +9,7 @@
                 @if (Session::get('roleSession') ==1)
                     <li style="width:65%"><a href="{{ route('admin.dashboard') }}"><span class="glyphicon glyphicon-user"></span> Xin chào - <b> {{ Session::get('userSession') }}</b></a></li>
                 @elseif(Session::get('roleSession') ==0)
-                    <li style="width:65%"><a href="{{ route('user.userpage') }}"><span class="glyphicon glyphicon-user"></span> Hello - <b> {{ Session::get('userSession') }}</b></a></li>
+                    <li style="width:65%"><a href="{{ route('user.userpage') }}"><span class="glyphicon glyphicon-user"></span> Xin chào - <b> {{ Session::get('userSession') }}</b></a></li>
                 @endif
                 <li><a href="{{ route('admin.handleLogout') }}" style="">Đăng xuất</a></li>
             @else()

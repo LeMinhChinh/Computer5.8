@@ -21,6 +21,8 @@ Route::group([
     'namespace' => 'Home'
 ], function () {
     Route::get('homepage','HomeController@home')->name('home');
+    Route::get('error-page','HomeController@errorpage')->name('errorpage');
+    Route::get('navigation','HomeController@navigation')->name('navigation');
 
     Route::get('detail-product/{id}','ProductController@detail')->name('detailProduct');
     Route::get('list-product/{idtype}','ProductController@listproduct')->name('listproduct');
@@ -28,7 +30,8 @@ Route::group([
 
     Route::get('userpage','UserpageController@userpage')->name('userpage');
 
-    Route::get('error-page','HomeController@errorpage')->name('errorpage');
+    Route::get('cart/{id}~{quant}','CartController@addCart')->name('addCart');
+    Route::get('show-cart','CartController@showCart')->name('showCart');
 });
 Route::group([
     'prefix' => 'admin',

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\validateLogin;
 use App\Http\Requests\validateRegister;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -26,12 +27,15 @@ class UserController extends Controller
         $infoUser = $user->checkUserLogin($email, $password);
 
         if($infoUser){
-
             $request->session()->put('idSession', $infoUser['id']);
             $request->session()->put('userSession', $infoUser['username']);
             $request->session()->put('emailSession', $infoUser['email']);
             $request->session()->put('roleSession', $infoUser['role']);
-            return redirect()->route('admin.dashboard');
+            if(Session::get('roleSession') ==1){
+                return redirect()->route('admin.dashboard');
+            }else if(Session::get('roleSession') ==0){
+                return redirect()->route('user.home');
+            }
         }else{
             $request->session()->flash('errLogin','Username or Password invalid');
             return redirect()->route('admin.login');

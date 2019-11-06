@@ -124,7 +124,7 @@
                                                     </a>
                                             </div>
                                             <div class="col-md-6 text-right">
-                                                <a href="#" style="color:red;text-decoration:none;padding-right:15px">
+                                                <a href="{{ route('user.addCart',['id' => $hotPr['id'],'quant' => $hotPr['quantity']]) }}" style="color:red;text-decoration:none;padding-right:15px">
                                                     <span class="glyphicon glyphicon-shopping-cart"></span>
                                                     Giỏ hàng
                                                 </a>
@@ -180,7 +180,7 @@
                                         @endif
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <a href="#" style="color:red;text-decoration:none;padding-right:15px">
+                                        <a href="{{ route('user.addCart',['id' => $laptop['id'],'quant' => $laptop['quantity']]) }}" style="color:red;text-decoration:none;padding-right:15px">
                                             <span class="glyphicon glyphicon-shopping-cart"></span>
                                             Giỏ hàng
                                         </a>
@@ -236,7 +236,7 @@
                                         @endif
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <a href="#" style="color:red;text-decoration:none;padding-right:15px">
+                                        <a href="{{ route('user.addCart',['id' => $pc['id'],'quant' => $pc['quantity']]) }}" style="color:red;text-decoration:none;padding-right:15px">
                                             <span class="glyphicon glyphicon-shopping-cart"></span>
                                             Giỏ hàng
                                         </a>

@@ -73,7 +73,6 @@
                     <th>Percent</th>
                     <th>Price promo</th>
                     <th>Image</th>
-                    <th>Quantity</th>
                     <th colspan="2">Action</th>
                 </tr>
             </thead>
@@ -106,7 +105,6 @@
                                 <img src="{{ URL::to('/') }}/Uploads/images/{{ $product['image'] }}" alt="" width="120" height="120" class="img-fluid">
                             @endif
                         </td>
-                        <td>{{ $product['quantity'] }}</td>
                         <td>
                             <a href="{{ route('admin.editProduct',['id' => $product['id']]) }}" class="btn btn-info btn-sm">Update</a>
                         </td>

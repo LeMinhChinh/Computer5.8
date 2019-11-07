@@ -61,15 +61,6 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="typePr">Specification (*)</label>
-                            <select name="specPr" id="specPr" style="width:280px;margin-left:56px;height:35px;padding-left:15px">
-                                <option value="">--- Choose Specification ---</option>
-                                    @foreach ($spec as $sp)
-                                        <option value="{{ $sp['id'] }}" {{ $info['id_specification'] == $sp['id'] ? 'selected=selected' : '' }}>{{ $sp['ram'] }} / {{ $sp['cpu'] }} /  {{ $sp['color'] }} / {{ $sp['operating_system'] }}</option>
-                                    @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="pricePr">Price (*)</label>
                             <input type="text" class="form-control" id="pricePr" name="pricePr" value="{{ $info['price'] }}">
                         </div>
@@ -78,20 +69,12 @@
                             <input type="text" class="form-control" id="percentPr" name="percentPr" value="{{ $info['percent'] }}">
                         </div>
                         <div class="form-group">
-                            <label for="quantPr">Quantity (*)</label>
-                            <input type="text" class="form-control" id="quantPr" name="quantPr" value="{{ $info['quantity'] }}">
-                        </div>
-                        <div class="form-group">
                             <label for="quantPr">Status (*)</label>
                             <input type="text" class="form-control" id="sttPr" name="sttPr" value="{{ $info['status'] }}">
                         </div>
                         <div class="form-group">
                             <label for="imgPr">Image (*)</label>
                             <input type="file" class="form-control" id="imgPr" name="imgPr">
-                        </div>
-                        <div class="form-group">
-                            <label for="desPr">Description (*)</label>
-                            <input type="text" class="form-control" id="desPr" name="desPr" value="{{ $info['description'] }}">
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnConfirm" name="btnConfirm" style="margin-left:40%;margin-bottom:20px">Confirm</button>
                     </div>

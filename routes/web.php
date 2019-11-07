@@ -76,6 +76,7 @@ Route::group([
     Route::post('handle-create-product', 'ProductAdminController@handleCreateProduct')->name('handleCreateProduct');
 
     Route::post('delete-product','ProductAdminController@deleteProduct')->name('deleteProduct');
+    Route::post('delete-detail-product','ProductAdminController@deleteDetail')->name('deleteDetail');
 
     Route::get('update-product/{id}','ProductAdminController@editProduct')->name('editProduct');
     Route::post('handle-update-product/{id}','ProductAdminController@handleEditProduct')->name('handleEditProduct');

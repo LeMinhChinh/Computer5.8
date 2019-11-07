@@ -38,6 +38,7 @@
                     <th>Operating System</th>
                     <th>Size</th>
                     <th>Weight</th>
+                    <th>Quantity</th>
                 </tr>
             </thead>
             <tbody>
@@ -73,6 +74,9 @@
                             </td>
                             <td>
                                 <p>{{ $pc['weight'] }}</p>
+                            </td>
+                            <td>
+                                <p>{{ $pc['quantity'] }}</p>
                             </td>
                     </tr>
                 @endforeach

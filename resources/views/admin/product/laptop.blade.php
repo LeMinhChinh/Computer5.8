@@ -37,11 +37,13 @@
                     <th>Operating System</th>
                     <th>Size</th>
                     <th>Weight</th>
+                    <th>Quantity</th>
+                    <th colspan="2">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($lstLaptop as $key => $laptop)
-                    <tr>
+                    <tr class="js-product-{{ $laptop['id'] }}">
                         <td>{{ $laptop['id'] }}</td>
                         <td>
                             <p>{{ $laptop['name'] }}</p>
@@ -73,6 +75,15 @@
                         <td>
                             <p>{{ $laptop['weight'] }}</p>
                         </td>
+                        <td>
+                            <p>{{ $laptop['quantity'] }}</p>
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.editProduct',['id' => $laptop['id']]) }}" class="btn btn-info btn-sm">Update</a>
+                        </td>
+                        <td>
+                            <button id="{{ $laptop['id'] }}" class="btn btn-sm btn-danger js-delete-dtproduct">Delete</button>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
@@ -92,6 +103,31 @@
                     window.location.href =  "{{ route('admin.listLaptop') }}" + "?keyword=" + keyword;
                 }
             });
+
+            $('.js-delete-dtproduct').click(function() {
+                var self = $(this);
+                var idProduct = self.attr('id').trim();
+                if($.isNumeric(idProduct)){
+                    $.ajax({
+                        url: "{{ route('admin.deleteDetail') }}",
+                        type: "POST",
+                        data: {id: idProduct},
+                        beforeSend: function(){
+                            self.text('Loading ...');
+                        },
+                        success: function(data){
+                            self.text('Delete');
+                            if(data === 'Error' || data === 'Fail'){
+                                alert('Có lỗi xảy ra')
+                            } else {
+                                $('.js-product-'+idProduct).hide();
+                                alert('Xóa sản phẩm thành công');
+                            }
+                        }
+                    });
+                }
+            });
+
         });
     </script>
 @endpush

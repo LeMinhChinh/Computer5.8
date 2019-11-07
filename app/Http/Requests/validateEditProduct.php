@@ -27,10 +27,7 @@ class validateEditProduct extends FormRequest
             'namePr' => 'required',
             'pricePr' => 'required|numeric',
             'percentPr' => 'required|numeric',
-            'typePr' => 'required',
-            'specPr' => 'required',
-            'quantPr' => 'required',
-            'desPr' => 'required'
+            'typePr' => 'required'
         ];
     }
 
@@ -45,13 +42,7 @@ class validateEditProduct extends FormRequest
             'percentPr.required' => 'Vui lòng nhập % giảm giá cho sản phẩm',
             'percentPr.numeric' => 'Giảm giá sản phẩm phải là số',
 
-            'typePr.required' => 'Vui lòng chọn loại sản phẩm',
-
-            'specPr.required' => 'Vui lòng chọn đặc diểm sản phẩm',
-
-            'quantPr.required' => 'Vui lòng nhập số lượng sản phẩm',
-
-            'desPr.required' => 'Vui lòng nhập miêu tả sản phẩm'
+            'typePr.required' => 'Vui lòng chọn loại sản phẩm'
         ];
     }
 }

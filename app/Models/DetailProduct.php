@@ -44,6 +44,111 @@ class DetailProduct extends Model
         return $data;
     }
 
+    public function getAllDataLaptop()
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->where('tt.id_type',1)
+                    ->take(8)
+                    ->get();
+        return $data;
+    }
+
+    public function getAllDataPC()
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->where('tt.id_type',2)
+                    ->take(8)
+                    ->get();
+        return $data;
+    }
+
+    public function getAllProductByIdType($idtype)
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->where('tp.id',$idtype)
+                    ->paginate(12);
+        return $data;
+    }
+
+    public function getAllLaptopByTypeTrade($idtrade)
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('trademark AS tm','tm.id','=','tt.id_trade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->where('tp.id',1)
+                    ->where('tm.id',$idtrade)
+                    ->get();
+        return $data;
+    }
+
+    public function getAllPCByTypeTrade($idtrade)
+    {
+        $data = DB::table('product AS p')
+                    ->select('p.*')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('trademark AS tm','tm.id','=','tt.id_trade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->where('tp.id',2)
+                    ->where('tm.id',$idtrade)
+                    ->get();
+        return $data;
+    }
+
+    public function getAllLaptopAdmin($keyword = '')
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.name','tt.id_type','tm.name_trade','s.ram','s.cpu','s.color','s.screen','s.hard_drive','s.battery','s.operating_system','s.size','s.weight')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->join('trademark AS tm','tm.id','=','tt.id_trade')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->where('p.name', 'like', '%'.$keyword.'%')
+                    ->where('tt.id_type',1)
+                    ->orderBy('dp.id','ASC')
+                    ->paginate(15);
+        return $data;
+    }
+
+    public function getAllPcAdmin($keyword = '')
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.name','tt.id_type','tm.name_trade','s.ram','s.cpu','s.color','s.screen','s.hard_drive','s.battery','s.operating_system','s.size','s.weight')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->join('trademark AS tm','tm.id','=','tt.id_trade')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->where('p.name', 'like', '%'.$keyword.'%')
+                    ->where('tt.id_type',2)
+                    ->orderBy('dp.id','ASC')
+                    ->paginate(15);
+        return $data;
+    }
+
+    public function deleteDetail($id)
+    {
+        $del = DB::table('detail_product')
+                    ->where('id', $id)
+                    ->delete();
+        return $del;
+    }
+
     public function insertProductDetail($data)
     {
         $insert = DB::table('detail_product')->insert($data);

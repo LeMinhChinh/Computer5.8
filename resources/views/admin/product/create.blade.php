@@ -40,17 +40,11 @@
         </div>
     @endif
 
-    @if ($createDetailProductError)
-        <div class="alert alert-danger">
-            <h6>{{ $createDetailProductError }}</h6>
-        </div>
-    @endif
-
-    @if ($createSpecSuccess)
+    {{-- @if ($createSpecSuccess)
         <div class="alert alert-danger">
             <h6>{{ $createSpecSuccess }}</h6>
         </div>
-    @endif
+    @endif --}}
 
     <form action="{{ route('admin.handleCreateProduct') }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -68,7 +62,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="typePr">Specification (*)</label>
                     <select name="specPr" id="specPr" style="width:280px;margin-left:56px;height:35px;padding-left:15px">
                         <option value="">--- Choose Specification ---</option>
@@ -76,7 +70,7 @@
                         <option value="{{ $sp['id'] }}">{{ $sp['ram'] }} / {{ $sp['cpu'] }} /  {{ $sp['color'] }} / {{ $sp['operating_system'] }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
                 <div class="form-group">
                     <label for="pricePr">Price (*)</label>
                     <input type="text" class="form-control" id="pricePr" name="pricePr">
@@ -93,10 +87,10 @@
                     <label for="imgPr">Image (*)</label>
                     <input type="file" class="form-control" id="imgPr" name="imgPr">
                 </div>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="desPr">Description (*)</label>
                     <input type="text" class="form-control" id="desPr" name="desPr">
-                </div>
+                </div> --}}
                 <button type="submit" class="btn btn-primary" id="btnConfirm" name="btnConfirm" style="margin-left:40%;margin-bottom:20px">Confirm</button>
             </div>
     </form>

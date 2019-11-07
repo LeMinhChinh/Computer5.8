@@ -36,13 +36,13 @@ class ProductAdminController extends Controller
         return view('admin.product.product',$data);
     }
 
-    public function listLaptop(Product $laptop,Request $request)
+    public function listLaptop(DetailProduct $detail,Request $request)
     {
         $keyword = $request->keyword;
         $keyword = \strip_tags($keyword);
         $data['keyword'] = $keyword;
 
-        $lstLaptop = $laptop->getAllLaptopAdmin($keyword);
+        $lstLaptop = $detail->getAllLaptopAdmin($keyword);
         $data['paginate'] = $lstLaptop;
         $lstLaptop = \json_decode(json_encode($lstLaptop),true);
         // dd($lstLaptop);
@@ -52,13 +52,13 @@ class ProductAdminController extends Controller
         return view('admin.product.laptop',$data);
     }
 
-    public function listpc(Product $pc,Request $request)
+    public function listpc(DetailProduct $detail,Request $request)
     {
         $keyword = $request->keyword;
         $keyword = \strip_tags($keyword);
         $data['keyword'] = $keyword;
 
-        $lstPc = $pc->getAllPcAdmin($keyword);
+        $lstPc = $detail->getAllPcAdmin($keyword);
         $data['paginate'] = $lstPc;
         $lstPc = \json_decode(json_encode($lstPc),true);
 
@@ -80,7 +80,6 @@ class ProductAdminController extends Controller
         $data['spec'] = $spec;
         $data['messages'] = $request->session()->get('messages');
         $data['createProductError'] = $request->session()->get('createProductError');
-        $data['createDetailProductError'] = $request->session()->get('createDetailProductError');
         $data['createSpecSuccess'] = $request->session()->get('createSpecSuccess');
         $data['errImage'] = $request->session()->get('errImage');
         return view('admin.product.create',$data);
@@ -93,22 +92,9 @@ class ProductAdminController extends Controller
         $percent = $request->percentPr;
         $promoPr = $request->promoPr;
         $typetrade = $request->typePr;
-        $spec = $request->specPr;
-        $quant = $request->quantPr;
-        $desc = $request->desPr;
-
-        // if($request->hasFile('imgPr')){
-        //     if($request->file('imgPr')->isValid()){
-        //         $file = $request->file('imgPr');
-        //         $nameFile = $file->getClientOriginalName();
-        //         $up = $file->move('Uploads/images',$nameFile);
-
-        //         if(!$up){
-        //             $request->session()->flash('errImage','Lỗi upload ảnh lên server');
-        //             return redirect()->route('admin.createProduct');
-        //         }
-        //     }
-        // }
+        // $spec = $request->specPr;
+        // $quant = $request->quantPr;
+        // $desc = $request->desPr;
 
         if(isset($_FILES['imgPr'])){
             if($_FILES['imgPr']['error'] == 0){
@@ -136,20 +122,8 @@ class ProductAdminController extends Controller
 
         $idProduct = $product->insertProduct($insertData);
         if($idProduct > 0){
-            $detailProduct = [
-                'id_product' => $idProduct,
-                'id_specification' => $spec,
-                'description' => $desc,
-                'quantity' => $quant
-            ];
-            $detailInsert = $detail->insertProductDetail($detailProduct);
-            if($detailInsert){
-                $request->session()->flash('createProductSuccess','Thêm mới sản phẩm thành công');
+            $request->session()->flash('createProductSuccess','Thêm mới sản phẩm thành công');
                 return redirect()->route('admin.product');
-            }else{
-                $request->session()->flash('createDetailProductError','Thêm chi tiết sản phẩm thất bại.Vui lòng kiểm tra lại');
-                return redirect()->route('admin.createProduct');
-            }
         }else{
             $request->session()->flash('createProductError','Thêm mới thất bại.Vui lòng kiểm tra lại');
             return redirect()->route('admin.createProduct');
@@ -162,6 +136,22 @@ class ProductAdminController extends Controller
         $id = is_numeric($id) ? $id : 0;
         if($id > 0){
             $delete = $product->deleteProduct($id);
+            if($delete){
+                echo "Success";
+            } else {
+                echo "Fail";
+            }
+        } else {
+            echo "Error";
+        }
+    }
+
+    public function deleteDetail(Request $request, DetailProduct $detail)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        if($id > 0){
+            $delete = $detail->deleteDetail($id);
             if($delete){
                 echo "Success";
             } else {
@@ -265,13 +255,6 @@ class ProductAdminController extends Controller
 
             $update = $product->editProduct($dataUpdate, $idPr);
             if($update){
-                $updateDetail = [
-                    'quantity' => $quant,
-                    'description' => $desc,
-                    'id_specification' => $spec
-                ];
-                $updateDetail = $detail->updateDetailProductById($updateDetail, $idPr);
-
                 $request->session()->flash('updateProductSuccess', 'Cập nhật sản phẩm thành công');
                 return redirect()->route('admin.product');
             }else{

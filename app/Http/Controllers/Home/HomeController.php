@@ -24,10 +24,10 @@ class HomeController extends Controller
         $lstName = $cate->getDataName();
         $lstName = json_decode(json_encode($lstName),true);
 
-        $lstLaptop = $product->getAllDataLaptop();
+        $lstLaptop = $detail->getAllDataLaptop();
         $lstLaptop = json_decode(json_encode($lstLaptop),true);
         // dd($lstLaptop);
-        $lstPC = $product->getAllDataPC();
+        $lstPC = $detail->getAllDataPC();
         $lstPC = json_decode(json_encode($lstPC),true);
 
         $data['lstHotProduct'] = $lstHotProduct;

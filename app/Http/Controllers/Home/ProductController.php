@@ -11,21 +11,20 @@ use App\Models\Trademark;
 
 class ProductController extends Controller
 {
-    public function detail($id,DetailProduct $dtproduct,Request $request, Product $product)
+    public function detail($id,DetailProduct $detail)
     {
-        $detailPr = $dtproduct->getDataProductById($id);
+        $detailPr = $detail->getDataProductById($id);
         $detailPr = \json_decode(json_encode($detailPr),true);
 
         $data['detailPr'] = $detailPr;
-        // dd($detailPr);
 
         return view('home.product.detail',$data);
     }
 
-    public function listproduct($idtype, Product $product)
+    public function listproduct($idtype, DetailProduct $detail)
     {
         if($idtype == 1){
-            $listlaptop = $product->getAllProductByIdType($idtype);
+            $listlaptop = $detail->getAllProductByIdType($idtype);
             $data['paginate'] = $listlaptop;
             $listlaptop = json_decode(json_encode($listlaptop),true);
             $data['listlaptop'] = $listlaptop['data'] ?? [];
@@ -35,7 +34,7 @@ class ProductController extends Controller
 
             return view('home.product.listlaptop',$data);
         }{
-            $listpc = $product->getAllProductByIdType($idtype);
+            $listpc = $detail->getAllProductByIdType($idtype);
             $data['paginate'] = $listpc;
             $listpc = json_decode(json_encode($listpc),true);
             $data['listpc'] = $listpc['data'] ?? [];
@@ -48,11 +47,11 @@ class ProductController extends Controller
         }
     }
 
-    public function fiterproduct($idtype, $idtrade, Product $product, Category $cate, Trademark $trade)
+    public function fiterproduct($idtype, $idtrade, Category $cate, Trademark $trade,DetailProduct $detail)
     {
 
         if($idtype ==1){
-            $listlpName = $product->getAllLaptopByTypeTrade($idtrade);
+            $listlpName = $detail->getAllLaptopByTypeTrade($idtrade);
             $listlpName = \json_decode(\json_encode($listlpName),true);
 
             $laptopType = Category::find($idtype);
@@ -64,7 +63,7 @@ class ProductController extends Controller
 
             return view('home.product.listlpname',$data);
         }elseif($idtype ==2){
-            $listpcName = $product->getAllPCByTypeTrade($idtrade);
+            $listpcName = $detail->getAllPCByTypeTrade($idtrade);
             $listpcName = \json_decode(\json_encode($listpcName),true);
 
             $laptopType = Category::find($idtype);

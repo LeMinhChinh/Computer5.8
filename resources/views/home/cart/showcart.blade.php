@@ -36,7 +36,9 @@
                             <p class="product-title">Giá : {{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</p>
                             <p><input type="number" value="{{ $item['quantity'] }}" min="1" class="qty"></p>
                             <p class="product-title">Tổng giá : {{ number_format($item['price']*$item['quantity'] ,0 ,'.' ,'.').'' }}&#8363;</p>
-                            <p style="padding:60px 0 0 20px"><i class="fa fa-edit" style="color:#5D37F3"></i><a href=""  style="color:#5D37F3;text-decoration:none;font-size:15px" class="updateQty">     Cập nhật số lượng</a></p>
+                            {{-- <p style="padding:60px 0 0 20px"><i class="fa fa-edit" style="color:#5D37F3"></i><a href=""  style="color:#5D37F3;text-decoration:none;font-size:15px" class="updateQty">     Cập nhật số lượng</a></p> --}}
+                            <button type="submit" class="btn btn-primary updatecart">Update</button>
+                            <input type="hidden" name="" value="{{ $item['id'] }}" class="idcart">
                         </div>
                     </div>
                 </div>
@@ -60,3 +62,28 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script type="text/javascript">
+        $('.updatecart').click(function(){
+			var self = $(this);
+			let id = self.parent().find('input[class=idcart]').val();
+			let quantity = self.prev().prev().find('input[type=number]').val();
+			$.ajax({
+				url   : "{{ route('user.updateCart') }}",
+				type  : "POST",
+				data  : {id:id,quantity:quantity},
+				beforesend: function(){
+					seft.text('Loading..');
+				},
+				success:function(data){
+					if(data ==='err'){
+                        alert('Có Lỗi Xảy ra Vui lòng thử lại');
+                    }else{
+                        window.location = 'show-cart';
+                    }
+				}
+			});
+		});
+    </script>
+@endpush

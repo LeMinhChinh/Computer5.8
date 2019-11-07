@@ -38,7 +38,7 @@ Route::group([
     Route::get('show-cart','CartController@showCart')->name('showCart');
     Route::get('delete-product/{id}','CartController@deleteProduct')->name('deleteProduct');
     Route::get('delete-cart','CartController@deleteCart')->name('deleteCart');
-    // Route::post('update-cart/{id}','CartController@updateCart')->name('updateCart');
+    Route::post('update-cart','CartController@updateCart')->name('updateCart');
     Route::get('order-cart','CartController@orderCart')->name('orderCart');
 
     /* Bill */

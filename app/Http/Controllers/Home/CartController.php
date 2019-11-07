@@ -9,7 +9,6 @@ use App\Models\DetailProduct;
 use App\Models\OrderCart;
 use App\Models\DetailOrderCart;
 use Illuminate\Support\Facades\Session;
-// use Illuminate\Support\Facades\Validator;
 use Cart;
 use DB;
 use App\Http\Requests\validateCreateBill;
@@ -19,7 +18,6 @@ class CartController extends Controller
     public function addCart($id,$quant,Product $product,DetailProduct $detail)
     {
         $orderPr = $detail->addProductToCart($id);
-        // dd($orderPr);
         if($orderPr->quantity >= 0){
             if(!empty(Session::get('idSession'))){
                 $idUser = Session::get('idSession');
@@ -82,24 +80,30 @@ class CartController extends Controller
         return redirect()->route('user.showCart');
     }
 
-    // public function updateCart(Request $request)
-    // {
-    //     $idPr = $request->id;
-    //     $idPr = is_numeric($idPr) ? $idPr : 0;
-    //     $qtyPr = $request->qty;
+    public function updateCart(Request $request)
+    {
+        if(!empty(Session::get('idSession'))){
+            $idUser = Session::get('idSession');
+        }else{
+            $idUser = -1;
+        }
 
-    //     if($idPr > 0){
-    //         $update = Cart::update($idPr, $qtyPr);
-    //         // if($update){
-    //         //     echo "Success";
-    //         // }else{
-    //         //     echo "Fail";
-    //         // }
-    //         return redirect()->route('user.showCart');
-    //     }else{
-    //         echo "Error";
-    //     }
-    // }
+        $idPr = $request->id;
+        $idPr = is_numeric($idPr) ? $idPr : 0;
+        $qtyPr = $request->quantity;
+
+        $update=Cart::session($idUser)
+                    ->update($idPr, array(
+                            'quantity' => array(
+                            'relative' => false,
+                            'value' => $qtyPr)
+        ));
+        if($update){
+            echo "ok";
+        }else{
+            echo "err";
+        }
+    }
 
     public function orderCart(Request $request)
     {

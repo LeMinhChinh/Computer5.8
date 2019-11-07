@@ -6,13 +6,8 @@
         <div style="margin:20px 0px" class="title-detail">
             <a href="{{ route('user.home') }}">Trang chủ / </a><a href="" style="color:red">Giỏ hàng</a>
         </div>
-        <div class="row">
-            <div class="col-md-6">
-                <a href="{{ route('user.home') }}" class="btn btn-primary" style="margin-bottom:20px">Tiếp tục mua hàng</a>
-            </div>
-            <div class="col-md-3">
-                <button class="btn btn-danger" style="margin:0 0 20px 445px">Xóa giỏ hàng</button>
-            </div>
+        <div>
+            <a href="{{ route('user.home') }}" class="btn btn-primary" style="margin-bottom:20px">Tiếp tục mua hàng</a>
         </div>
         <div>
             <div style="border:1px #ccc solid">
@@ -34,25 +29,32 @@
                                     <li>Màu sắc : {{ $item['attributes']['color'] }}</li>
                                 </ul>
                             </div>
-                            <p><a href="" class="fa fa-trash" style="color:red;text-decoration:none;font-size:15px;padding:50px 0 0 20px">  Xóa sản phẩm</a></p>
+                            <p style="padding:50px 0 0 20px;color:red"><i class="fa fa-trash" ></i><a href="{{ route('user.deleteProduct',['id' => $item['id']]) }}" style="color:red;text-decoration:none;font-size:15px">    Xóa sản phẩm</a></p>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <p class="product-title">Price : {{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</p>
-                            <p><input type="number" value="{{ $item['quantity'] }}"></p>
-                            <p class="product-title">Total : {{ number_format($item['price']*$item['quantity'] ,0 ,'.' ,'.').'' }}&#8363;</p>
-                            <p><a href="" class="fa fa-trash" style="color:red;text-decoration:none;font-size:15px;padding:60px 0 0 20px">  Cập nhật số lượng</a></p>
+                            <p class="product-title">Giá : {{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</p>
+                            <p><input type="number" value="{{ $item['quantity'] }}" min="1" class="qty"></p>
+                            <p class="product-title">Tổng giá : {{ number_format($item['price']*$item['quantity'] ,0 ,'.' ,'.').'' }}&#8363;</p>
+                            <p style="padding:60px 0 0 20px"><i class="fa fa-edit" style="color:#5D37F3"></i><a href=""  style="color:#5D37F3;text-decoration:none;font-size:15px" class="updateQty">     Cập nhật số lượng</a></p>
                         </div>
                     </div>
                 </div>
                 @endforeach
-                <div>
-                    {{-- <p>Tổng tiền đơn hàng : </p> --}}
+                <div style="border-bottom:1px solid #ccc">
                     @if(isset($Total))
-                        <p class="product-title" style="padding:20px 0 0 800px;font-size:18px">Tổng tiền đơn hàng : {{ number_format($Total ,0 ,'.' ,'.').'' }}&#8363;</p>
+                        <p class="product-title" style="padding:20px 0 0 425px;font-size:18px">Tổng tiền đơn hàng : {{ number_format($Total ,0 ,'.' ,'.').'' }}&#8363;</p>
                     @else
-                        <p class="product-title" style="padding-left:800px">Tổng tiền đơn hàng : {{ '0' }}&#8363;</p>
+                        <p class="product-title" style="padding:20px 0 0 425px;font-size:18px">Tổng tiền đơn hàng : {{ '0' }}&#8363;</p>
                     @endif
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ route('user.deleteCart') }}" class="btn btn-danger" style="margin:10px 40%;height:50px;padding-top:15px">Xóa giỏ hàng</a>
+                    </div>
+                    <div class="col-md-6" style="border-left:1px solid #ccc">
+                        <a href="{{ route('user.orderCart') }}" class="btn btn-primary" style="margin:10px 40%;height:50px;padding-top:15px">Đặt hàng</a>
+                    </div>
                 </div>
             </div>
         </div>

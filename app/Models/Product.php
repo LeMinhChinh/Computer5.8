@@ -169,7 +169,7 @@ class Product extends Model
     public function addProductToCart($id)
     {
         $data = DB::table('product AS p')
-                    ->select('p.*','dp.quantity','s.ram','s.cpu','s.color')
+                    ->select('p.*','dp.*','s.ram','s.cpu','s.color')
                     ->join('detail_product AS dp','dp.id_product','=','p.id')
                     ->join('specification AS s','s.id','=','dp.id_specification')
                     ->where('p.id',$id)

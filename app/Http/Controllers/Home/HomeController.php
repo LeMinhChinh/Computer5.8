@@ -7,13 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Trademark;
 use App\Models\Product;
+use App\Models\DetailProduct;
 
 class HomeController extends Controller
 {
-    public function home(Request $request, Category $cate, Trademark $trade, Product $product)
+    public function home(Request $request, Category $cate, Trademark $trade, Product $product,DetailProduct $detail)
     {
         $data = [];
-        $lstHotProduct = $product->getAllDataByCreateAt();
+        $lstHotProduct = $detail->getAllDataByCreateAt();
         $lstHotProduct = json_decode(json_encode($lstHotProduct),true);
         // dd($lstHotProduct);
 

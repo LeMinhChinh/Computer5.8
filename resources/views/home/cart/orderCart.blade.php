@@ -49,13 +49,13 @@
                             <p style="color:#fff;font-size:20px;padding:15px 0 0 15px">Thông tinh khách hàng</p>
                         </div>
                         @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         @endif
 
                         @if ($messages)
@@ -63,6 +63,13 @@
                                 <h6>{{ $messages }}</h6>
                             </div>
                         @endif
+
+                        @if ($errorQuantity)
+                            <div class="alert alert-danger">
+                                <h6>{{ $errorQuantity }}</h6>
+                            </div>
+                        @endif
+
                         <div>
                             <p style="font-size:15px;padding:5px 0 0 5px">Để đặt hàng, quý khách vui lòng <a href="{{ route('admin.login') }}" style="text-decoration:none;color:black"><b>đăng nhập</b></a></p>
                             <div style="margin:0 10px">

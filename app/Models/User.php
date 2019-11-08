@@ -65,4 +65,13 @@ class User extends Model
                     ->delete();
         return $del;
     }
+
+    public function getDataById($id)
+    {
+        $data = DB::table('account')
+                    ->select('*')
+                    ->where('id',$id)
+                    ->first();
+        return $data;
+    }
 }

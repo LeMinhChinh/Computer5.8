@@ -2,7 +2,7 @@
     <div class="container">
         <ul class="x1">
             <li><a href="{{ route('user.home') }}">Trang chủ</a></li>
-            {{-- <li>
+            <li>
                 <a href="">Sản phẩm</a>
                 <i class="fa fa-caret-down" aria-hidden="true"></i>
                 <ul class="drop2">
@@ -55,7 +55,7 @@
                         </ul>
                     </li>
                 </ul>
-            </li> --}}
+            </li>
             <li><a href="">Sản phẩm</a></li>
             <li><a href="">Giới thiệu</a></li>
             <li><a href="">Tin tức</a></li>

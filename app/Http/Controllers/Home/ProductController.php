@@ -8,8 +8,9 @@ use App\Models\DetailProduct;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Trademark;
+use App\Http\Controllers\Home\HomeController;
 
-class ProductController extends Controller
+class ProductController extends HomeController
 {
     public function detail($id,DetailProduct $detail)
     {

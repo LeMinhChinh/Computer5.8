@@ -8,15 +8,33 @@ use App\Models\Category;
 use App\Models\Trademark;
 use App\Models\Product;
 use App\Models\DetailProduct;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Session;
+use Cart;
 
 class HomeController extends Controller
 {
+    public function __construct(Category $cate)
+    {
+        $data = [];
+
+        $lstCate = $cate->getAllDataCate();
+        $lstCate = json_decode(json_encode($lstCate),true);
+
+        $lstName = $cate->getDataName();
+        $lstName = json_decode(json_encode($lstName),true);
+
+        $data['lstCate'] = $lstCate;
+        $data['lstName'] = $lstName;
+
+        view::share($data);
+    }
+
     public function home(Request $request, Category $cate, Trademark $trade, Product $product,DetailProduct $detail)
     {
         $data = [];
         $lstHotProduct = $detail->getAllDataByCreateAt();
         $lstHotProduct = json_decode(json_encode($lstHotProduct),true);
-        // dd($lstHotProduct);
 
         $lstCate = $cate->getAllDataCate();
         $lstCate = json_decode(json_encode($lstCate),true);
@@ -26,7 +44,7 @@ class HomeController extends Controller
 
         $lstLaptop = $detail->getAllDataLaptop();
         $lstLaptop = json_decode(json_encode($lstLaptop),true);
-        // dd($lstLaptop);
+
         $lstPC = $detail->getAllDataPC();
         $lstPC = json_decode(json_encode($lstPC),true);
 
@@ -42,20 +60,5 @@ class HomeController extends Controller
     public function errorpage()
     {
         return view('home.home.error');
-    }
-
-    public function navigation(Category $cate)
-    {
-        $data = [];
-
-        $lstCate = $cate->getAllDataCate();
-        $lstCate = json_decode(json_encode($lstCate),true);
-
-        $lstName = $cate->getDataName();
-        $lstName = json_decode(json_encode($lstName),true);
-
-        $data['lstCate'] = $lstCate;
-        $data['lstName'] = $lstName;
-        return view('home.partials.nav',$data);
     }
 }

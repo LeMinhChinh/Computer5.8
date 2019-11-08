@@ -8,8 +8,9 @@ use App\Models\User;
 use App\Http\Requests\validateLogin;
 use App\Http\Requests\validateRegister;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Home\HomeController;
 
-class UserController extends Controller
+class UserController extends HomeController
 {
     public function login(Request $request)
     {

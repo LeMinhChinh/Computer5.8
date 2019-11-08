@@ -32,6 +32,10 @@ Route::group([
 
     /* User */
     Route::get('userpage','PersonalePageController@infoUser')->name('userpage');
+    Route::get('check-info/{id}','PersonalePageController@checkInfo')->name('checkInfo');
+    Route::get('update-info/{id}','PersonalePageController@updateInfo')->name('updateInfo');
+    Route::get('check-bill/{id}','PersonalePageController@checkBill')->name('checkBill');
+    Route::get('delete-bill/{id}','PersonalePageController@deleteBill')->name('deleteBill');
 
     /* Cart */
     Route::get('cart/{id}~{quant}','CartController@addCart')->name('addCart');

@@ -29,7 +29,7 @@
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div id="search">
                 <form action="" method="post">
-                    <input type="text" name="txt_search" placeholder="Tìm sản phẩm" />
+                    <input type="text" name="txt_search" placeholder="Tìm sản phẩm">
                     <button type="submit" name="btn_search">Tìm kiếm</button>
                 </form>
             </div>
@@ -37,7 +37,7 @@
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div class="cart">
                 <div class="discart">
-                    <span class="mycart">Giỏ hàng:</span>
+                    <span class="mycart"><a href="{{ route('user.showCart') }}" style="color:black;text-decoration:none">Giỏ hàng:</a></span>
                     <span class="count_products_cart">0 sản phẩm</span>
                 </div>
                 <div class="top-cart-content">

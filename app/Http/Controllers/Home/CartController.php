@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Session;
 use Cart;
 use DB;
 use App\Http\Requests\validateCreateBill;
+use App\Http\Controllers\Home\HomeController;
 
-class CartController extends Controller
+class CartController extends HomeController
 {
     public function addCart($id,$quant,Product $product,DetailProduct $detail)
     {
@@ -45,7 +46,7 @@ class CartController extends Controller
         }
     }
 
-    public function showCart()
+    public function showCart(Request $request)
     {
         if(!empty(Session::get('idSession'))){
             $idUser = Session::get('idSession');
@@ -54,6 +55,8 @@ class CartController extends Controller
         }
        $data['carts'] = Cart::session($idUser)->getContent();
        $data['Total'] = Cart::session($idUser)->getTotal();
+       $data['errorLogin'] = $request->session()->get('errorLogin');
+       $data['errorTotal'] = $request->session()->get('errorTotal');
        return view('home.cart.showcart',$data);
     }
 
@@ -117,10 +120,12 @@ class CartController extends Controller
             if($data['Total'] != 0){
                 return view('home.cart.orderCart',$data);
             }else{
-                return redirect()->route('user.showCart')->with('notifi','Mời bạn mua sản phẩm trước khi đặt hàng');
+                $request->session()->flash('errorTotal', 'Mời bạn mua sản phẩm trước khi đặt hàng');
+                return redirect()->route('user.showCart');
                 }
         }else{
-            return redirect()->route('user.showCart')->with('notifi','Bạn cần đăng nhập để đặt hàng');
+            $request->session()->flash('errorLogin', 'Bạn cần đăng nhập để đặt hàng');
+            return redirect()->route('user.showCart');
         }
     }
 
@@ -134,7 +139,7 @@ class CartController extends Controller
             $orderPr = $detail->addProductToCart($cart['id']);
             if($cart['quantity'] > $orderPr->quantity){
                 $request->session()->flash('errorQuantity', 'Sản phẩm hiện không đủ số lượng.Vui lòng giảm số lượng');
-                return redirect()->route('page.orderCart');
+                return redirect()->route('user.orderCart');
             }
         }
 
@@ -171,6 +176,7 @@ class CartController extends Controller
                     ->update(['quantity' => $qty]);
             Cart::session(Session::get('idSession'))->remove($cart['id']);
         }
-        return redirect()->route('user.userpage')->with('notifi','Đặt hàng thành công');
+        $request->session()->flash('successOrder', 'Bạn vừa đặt hàng thành công.Vui lòng chờ duyệt');
+        return redirect()->route('user.userpage');
     }
 }

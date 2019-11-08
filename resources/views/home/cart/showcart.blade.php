@@ -9,6 +9,28 @@
         <div>
             <a href="{{ route('user.home') }}" class="btn btn-primary" style="margin-bottom:20px">Tiếp tục mua hàng</a>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if ($errorLogin)
+            <div class="alert alert-danger">
+                <h6>{{ $errorLogin }}</h6>
+            </div>
+        @endif
+
+        @if ($errorTotal)
+            <div class="alert alert-danger">
+                <h6>{{ $errorTotal }}</h6>
+            </div>
+        @endif
+
         <div>
             <div style="border:1px #ccc solid">
                 <div style="border-bottom:1px solid #ccc">
@@ -36,7 +58,6 @@
                             <p class="product-title">Giá : {{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</p>
                             <p><input type="number" value="{{ $item['quantity'] }}" min="1" class="qty"></p>
                             <p class="product-title">Tổng giá : {{ number_format($item['price']*$item['quantity'] ,0 ,'.' ,'.').'' }}&#8363;</p>
-                            {{-- <p style="padding:60px 0 0 20px"><i class="fa fa-edit" style="color:#5D37F3"></i><a href=""  style="color:#5D37F3;text-decoration:none;font-size:15px" class="updateQty">     Cập nhật số lượng</a></p> --}}
                             <button type="submit" class="btn btn-primary updatecart">Update</button>
                             <input type="hidden" name="" value="{{ $item['id'] }}" class="idcart">
                         </div>

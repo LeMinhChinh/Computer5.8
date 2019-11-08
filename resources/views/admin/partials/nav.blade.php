@@ -6,31 +6,55 @@
                 <a href="">Sản phẩm</a>
                 <i class="fa fa-caret-down" aria-hidden="true"></i>
                 <ul class="drop2">
-                    <li>
-                        <a href="">Laptop</a>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                        <ul class="drop3">
-                            <li><a href="">Laptop Dell</a></li>
-                            <li><a href="">Laptop Asus</a></li>
-                            <li><a href="">Laptop Lenovo</a></li>
-                            <li><a href="">Macbook</a></li>
-                        </ul>
+                    @foreach ($lstCate as $cate)
+                        <li>
+                            <a href="{{ route('user.listproduct',['idtype' => $cate['id']]) }}">{{ $cate['type'] }}</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="drop3">
+                                @foreach ($lstName as $name)
+                                    @if($cate['id'] == $name['id_type'])
+                                        <li><a href="{{ route('user.filterproduct',['idtype' => $name['id_type'],'idtrade' => $name['id_trade']]) }}">{{ $name['type'] }} {{ $name['name_trade'] }}</a></li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </li>
+                    @endforeach
                     </li>
                     <li>
-                        <a href="">Máy tính văn phòng</a>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                        <ul class="drop3">
-                            <li><a href="">PC Dell</a></li>
-                            <li><a href="">PC Asus</a></li>
-                            <li><a href="">PC Lenovo</a></li>
-                            <li><a href="">PC Acer</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="">Máy tính chơi game</a></li>
-                    <li><a href="">Màn hình máy tính</a></li>
-                    <li><a href="">Gaming Gear</a></li>
-                    <li><a href="">Linh phụ kiện</a></li>
-                    <li><a href="">Thiết bị mạng</a></li>
+                            <a href="{{ route('user.errorpage') }}">Máy tính chơi game</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Màn hình máy tính</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Gaming Gear</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Linh phụ kiện</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('user.errorpage') }}">Thiết bị mạng</a>
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
+                            <ul class="mnboxl_1">
+                                <li><a href="{{ route('user.errorpage') }}">Đang cập nhật</a></li>
+                            </ul>
+                        </li>
                 </ul>
             </li>
             <li><a href="">Giới thiệu</a></li>

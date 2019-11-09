@@ -24,7 +24,8 @@
                         <span class="glyphicon glyphicon-user"></span>
                         </span> {{ Session::get('userSession') }}
                     </button>
-                    <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.checkInfo',['id' => $idUser]) }}" style="text-decoration:none">Thông tin cá nhân</a></button>
+                    {{-- <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.checkInfo',['id' => $idUser]) }}" style="text-decoration:none">Thông tin cá nhân</a></button> --}}
+                    <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.checkInfo') }}" style="text-decoration:none">Thông tin cá nhân</a></button>
                     <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.checkBill',['id' => $idUser ]) }}" style="text-decoration:none">Danh sách đơn hàng</a></button>
                     <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.updateInfo',['id' => $idUser]) }}" style="text-decoration:none">Cập nhật thông tin</a></button>
                   </div>

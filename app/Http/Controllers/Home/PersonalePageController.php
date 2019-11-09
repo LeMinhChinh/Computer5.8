@@ -11,6 +11,8 @@ use App\Models\DetailProduct;
 use App\Models\User;
 use Cart;
 use Illuminate\Support\Facades\Session;
+use App\Http\Requests\validateUpdateInfo;
+use Illuminate\Support\Facades\Validator;
 
 class PersonalePageController extends HomeController
 {
@@ -55,23 +57,99 @@ class PersonalePageController extends HomeController
         }
     }
 
-    public function checkInfo($id,User $acc)
+    public function checkInfo(User $acc,Request $request)
     {
+        $id = Session::get('idSession');
         $infoAcc = $acc->getDataById($id);
         $infoAcc = \json_decode(json_encode($infoAcc),true);
 
         $data['infoAcc'] = $infoAcc;
-        $data['idUser'] = Session::get('idSession');
+        $data['idUser'] = $id;
+        $data['updateInfoSuccess'] = $request->session()->get('updateInfoSuccess');
         return view('home.user.checkInfo',$data);
     }
 
-    public function updateInfo($id,User $acc)
+    public function updateInfo($id,User $acc,Request $request)
     {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
         $infoAcc = $acc->getDataById($id);
         $infoAcc = \json_decode(json_encode($infoAcc),true);
 
-        $data['infoAcc'] = $infoAcc;
-        $data['idUser'] = Session::get('idSession');
-        return view('home.user.updateInfo',$data);
+        if($infoAcc > 0){
+            $data['infoAcc'] = $infoAcc;
+            $data['idUser'] = Session::get('idSession');
+            $data['messages'] = $request->session()->get('messages');
+            $data['errorAvatar'] = $request->session()->get('errorAvatar');
+            $data['updateInfoError'] = $request->session()->get('updateInfoError');
+            return view('home.user.updateInfo',$data);
+        }else{
+            abort(404);
+        }
+    }
+
+    public function handleUpdateInfo(validateUpdateInfo $request,User $acc)
+    {
+        $username = $request->userAcc;
+        $email = $request->emailAcc;
+        $fname = $request->fnameAcc;
+        $phone = $request->phoneAcc;
+        $gender = $request->genAcc;
+        $gender =  in_array($gender, ['1','0']) ? $gender : 1;
+        $age = $request->ageAcc;
+        $address = $request->addAcc;
+
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        $infoAcc = $acc->getDataById($id);
+        $infoAcc = \json_decode(\json_encode($infoAcc),true);
+
+        $oldAvatar = $infoAcc['avatar'];
+        if(isset($_FILES['avtAcc'])){
+            if($_FILES['avtAcc']['error'] == 0){
+                $validatorAvatar = Validator::make(
+                    ['avtAcc' => $request->file('avtAcc')],
+                    ['avtAcc' => 'required'],
+                    [
+                        'required' => 'Vui lòng chọn ảnh'
+                    ]
+                );
+
+                if($validatorAvatar->fails()){
+                    return redirect()->route('user.updateInfo',['id' => $id])
+                                    ->withErrors($validatorAvatar)
+                                    ->withInput();
+                }else{
+                    $oldAvatar = $_FILES['avtAcc']['name'];
+                    $tmpName  = $_FILES['avtAcc']['tmp_name'];
+                    $up = move_uploaded_file($tmpName, public_path() . '/Uploads/avatar/' . $oldAvatar);
+                    if(!$up){
+                        $request->session()->flash('errorAvatar', 'Lỗi upload ảnh lên server');
+                        return redirect()->route('user.updateInfo',['id' => $id]);
+                    }
+                }
+            }
+        }
+        $dataUpdate = [
+            'username' => $username,
+            'email' => $email,
+            'fullname' => $fname,
+            'phone' => $phone,
+            'gender' => $gender,
+            'age' => $age,
+            'address' => $address,
+            'avatar' => $oldAvatar,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
+
+        $update = $acc->updateInfo($dataUpdate, $id);
+
+        if($update){
+            $request->session()->flash('updateInfoSuccess', 'Cập nhật thông tin cá nhân thành công');
+            return redirect()->route('user.checkInfo',['id' => $id]);
+        }else{
+            $request->session()->flash('updateInfoError', 'Cập nhật thông tin thất bại.Vui lòng kiểm tra lại');
+            return redirect()->route('admin.updateInfo',['id' => $id]);
+        }
     }
 }

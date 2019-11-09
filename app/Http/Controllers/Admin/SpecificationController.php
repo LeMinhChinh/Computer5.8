@@ -43,7 +43,6 @@ class SpecificationController extends Controller
         ];
 
         $dataInsert = $spec->insertDataSpec($insertSpec);
-        // dd($dataInsert);
         if($dataInsert){
             $request->session()->flash('createSpecSuccess','Thêm thông số sản phẩm thành công');
             return redirect()->route('admin.createProduct');

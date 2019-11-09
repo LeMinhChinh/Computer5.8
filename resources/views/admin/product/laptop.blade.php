@@ -79,7 +79,7 @@
                             <p>{{ $laptop['quantity'] }}</p>
                         </td>
                         <td>
-                            <a href="{{ route('admin.editProduct',['id' => $laptop['id']]) }}" class="btn btn-info btn-sm">Update</a>
+                            <a href="{{ route('admin.editDetailPr',['id' => $laptop['id']]) }}" class="btn btn-info btn-sm">Update</a>
                         </td>
                         <td>
                             <button id="{{ $laptop['id'] }}" class="btn btn-sm btn-danger js-delete-dtproduct">Delete</button>

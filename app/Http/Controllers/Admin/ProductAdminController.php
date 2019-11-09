@@ -92,9 +92,6 @@ class ProductAdminController extends Controller
         $percent = $request->percentPr;
         $promoPr = $request->promoPr;
         $typetrade = $request->typePr;
-        // $spec = $request->specPr;
-        // $quant = $request->quantPr;
-        // $desc = $request->desPr;
 
         if(isset($_FILES['imgPr'])){
             if($_FILES['imgPr']['error'] == 0){
@@ -162,8 +159,9 @@ class ProductAdminController extends Controller
         }
     }
 
-    public function editProduct(Request $request,$id,Product $product,TypeTrade $typetrade, Specification $spec)
+    public function editProduct(Request $request,$id,Product $product,TypeTrade $typetrade)
     {
+        $id = $request->id;
         $id = is_numeric($id) ? $id : 0;
         $infoProduct = $product->getInfoProductById($id);
 
@@ -171,11 +169,8 @@ class ProductAdminController extends Controller
             $data = [];
             $type = $typetrade->getAllData();
             $type = \json_decode(json_encode($type),true);
-            $spec = $spec->getAllData();
-            $spec = \json_decode(json_encode($spec),true);
 
             $data['type'] = $type;
-            $data['spec'] = $spec;
             $data['info'] = $infoProduct;
             $data['messages'] = $request->session()->get('messages');
             $data['errorAvatar'] = $request->session()->get('errorAvatar');
@@ -183,7 +178,7 @@ class ProductAdminController extends Controller
 
             return view('admin.product.edit',$data);
         }else{
-            about(404);
+            abort(404);
         }
     }
 
@@ -222,7 +217,7 @@ class ProductAdminController extends Controller
                         ['imgPr' => $request->file('imgPr')],
                         ['imgPr' => 'required'],
                         [
-                            'required' => 'vui long chon anh'
+                            'required' => 'Vui lòng chọn ảnh'
                         ]
                     );
 
@@ -262,5 +257,51 @@ class ProductAdminController extends Controller
                 return redirect()->route('admin.editProduct',['id' => $idPost]);
             }
         }
+    }
+
+    public function editDetailPr(Request $request,$id,DetailProduct $detail,Specification $spec)
+    {
+        $id = $request->id;
+        $id = is_numeric($id) ? $id : 0;
+        $infoDetail = $detail->getInfoDetailById($id);
+        $infoDetail = \json_decode(\json_encode($infoDetail),true);
+
+        $spec = $spec->getAllData();
+        $spec = \json_decode(json_encode($spec),true);
+
+        if($infoDetail){
+            $data = [];
+            $data['info'] = $infoDetail;
+            $data['spec'] = $spec;
+            $data['messages'] = $request->session()->get('messages');
+
+            return view('admin.product.editDetail',$data);
+        }else{
+            abort(404);
+        }
+    }
+
+    public function handleEditDetail(validateEditDetail $request, DetailPeoduct $detail, Specification $spec)
+    {
+        $name = $request->namePr;
+        $spec = $request->specPr;
+        $qty = $request->qtyPr;
+        $desc = $request->desPr;
+
+        $idDt = $request->id;
+        $idDt = is_numeric($idDt) ? $idDt : 0;
+        $infoDetail = $infoDetail->getInfoProductById($idDt);
+        $infoDetail = \json_decode(\json_encode($infoDetail),true);
+
+        $dataUpdate = [
+            'id_specification' => $type,
+            'description' => $name,
+            'quantity' => $price,
+            'percent' => $percent,
+            'promo_price' => $price - (($price*$percent)/100) ,
+            'image' => $oldAvatar,
+            'status' => $stt,
+            'updated_at' => date('Y-m-d H:i:s')
+        ];
     }
 }

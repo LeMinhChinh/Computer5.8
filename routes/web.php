@@ -32,8 +32,9 @@ Route::group([
 
     /* User */
     Route::get('userpage','PersonalePageController@infoUser')->name('userpage');
-    Route::get('check-info/{id}','PersonalePageController@checkInfo')->name('checkInfo');
+    Route::get('check-info','PersonalePageController@checkInfo')->name('checkInfo');
     Route::get('update-info/{id}','PersonalePageController@updateInfo')->name('updateInfo');
+    Route::post('handle-update-info','PersonalePageController@handleUpdateInfo')->name('handleUpdateInfo');
     Route::get('check-bill/{id}','PersonalePageController@checkBill')->name('checkBill');
     Route::get('delete-bill/{id}','PersonalePageController@deleteBill')->name('deleteBill');
 
@@ -84,6 +85,9 @@ Route::group([
 
     Route::get('update-product/{id}','ProductAdminController@editProduct')->name('editProduct');
     Route::post('handle-update-product/{id}','ProductAdminController@handleEditProduct')->name('handleEditProduct');
+
+    Route::get('update-detail-product/{id}','ProductAdminController@editDetailPr')->name('editDetailPr');
+    Route::get('handle-update-detail-product/{id}','ProductAdminController@handleEditDetailPr')->name('handleEditDetailPr');
 
     /* Specification */
     Route::get('create-specification','SpecificationController@createSpec')->name('createSpec');

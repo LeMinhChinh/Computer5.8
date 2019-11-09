@@ -176,4 +176,15 @@ class DetailProduct extends Model
                     ->first();
         return $data;
     }
+
+    public function getInfoDetailById($id)
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.name','p.image','s.ram','s.cpu','s.color','s.screen','s.hard_drive','s.battery','s.operating_system','s.size','s.weight')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->where('dp.id',$id)
+                    ->first();
+        return $data;
+    }
 }

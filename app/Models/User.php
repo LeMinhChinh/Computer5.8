@@ -74,4 +74,12 @@ class User extends Model
                     ->first();
         return $data;
     }
+
+    public function updateInfo($data,$id)
+    {
+        $update = DB::table('account')
+                    ->where('id',$id)
+                    ->update($data);
+        return $update;
+    }
 }

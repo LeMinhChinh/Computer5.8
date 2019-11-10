@@ -13,6 +13,7 @@ use App\Models\Specification;
 use App\Http\Requests\validateCreateProduct;
 use App\Http\Requests\validateEditProduct;
 use App\Http\Requests\validateEditDetail;
+use App\Http\Requests\validateCreateDetail;
 use Illuminate\Support\Facades\Validator;
 
 class ProductAdminController extends Controller
@@ -45,9 +46,10 @@ class ProductAdminController extends Controller
         $lstLaptop = $detail->getAllLaptopAdmin($keyword);
         $data['paginate'] = $lstLaptop;
         $lstLaptop = \json_decode(json_encode($lstLaptop),true);
-        // dd($lstLaptop);
 
         $data['lstLaptop'] = $lstLaptop['data'] ?? [];
+        $data['updateSuccess'] = $request->session()->get('updateSuccess');
+        $data['insertSuccess'] = $request->session()->get('insertSuccess');
 
         return view('admin.product.laptop',$data);
     }
@@ -63,29 +65,26 @@ class ProductAdminController extends Controller
         $lstPc = \json_decode(json_encode($lstPc),true);
 
         $data['lstPc'] = $lstPc['data'] ?? [];
+        $data['updateSuccess'] = $request->session()->get('updateSuccess');
+        $data['insertSuccess'] = $request->session()->get('insertSuccess');
 
         return view('admin.product.pc',$data);
     }
 
-    public function createProduct(Request $request,TypeTrade $typetrade, DetailProduct $detail,Specification $spec)
+    public function createProduct(Request $request,TypeTrade $typetrade)
     {
         $data = [];
         $typetrade = $typetrade->getAllDataTT();
         $typetrade = \json_decode(\json_encode($typetrade),true);
-        // dd($typetrade);
-        $spec = $spec->getAllData();
-        $spec = \json_decode(\json_encode($spec),true);
 
         $data['typetrade'] = $typetrade;
-        $data['spec'] = $spec;
         $data['messages'] = $request->session()->get('messages');
         $data['createProductError'] = $request->session()->get('createProductError');
-        $data['createSpecSuccess'] = $request->session()->get('createSpecSuccess');
         $data['errImage'] = $request->session()->get('errImage');
         return view('admin.product.create',$data);
     }
 
-    public function handleCreateProduct(validateCreateProduct $request, Product $product,DetailProduct $detail)
+    public function handleCreateProduct(validateCreateProduct $request, Product $product)
     {
         $name = $request->namePr;
         $price = $request->pricePr;
@@ -259,6 +258,96 @@ class ProductAdminController extends Controller
         }
     }
 
+    public function createDetail(Request $request, Product $product, Specification $spec)
+    {
+        $data = [];
+
+        $name = $product->getName();
+        $name = \json_decode(\json_encode($name),true);
+
+        $spec = $spec->getAllData();
+        $spec = \json_decode(\json_encode($spec),true);
+
+        $data['spec'] = $spec;
+        $data['namePr'] = $name;
+        $data['messages'] = $request->session()->get('messages');
+        $data['insertError'] = $request->session()->get('insertError');
+        $data['createSpecSuccess'] = $request->session()->get('createSpecSuccess');
+
+        return view('admin.product.createdetail',$data);
+    }
+
+    public function createDetail_v2(Request $request, Product $product, Specification $spec)
+    {
+        $data = [];
+
+        $name = $product->getName();
+        $name = \json_decode(\json_encode($name),true);
+
+        $spec = $spec->getAllData();
+        $spec = \json_decode(\json_encode($spec),true);
+
+        $data['spec'] = $spec;
+        $data['namePr'] = $name;
+        $data['messages'] = $request->session()->get('messages');
+        $data['insertError'] = $request->session()->get('insertError');
+        // $data['createSpecSuccess'] = $request->session()->get('createSpecSuccess');
+
+        return view('admin.product.createdetail_v2',$data);
+    }
+
+    public function handleCreateDetail(validateCreateDetail $request, DetailProduct $detail)
+    {
+        $name = $request->namePr;
+        $spec = $request->specPr;
+        $qty = $request->qtyPr;
+        $desc = $request->desPr;
+
+        $insertData = [
+            'id_product' => $name,
+            'id_specification' => $spec,
+            'quantity' => $qty,
+            'description' => $desc,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => null
+        ];
+
+        $insert = $detail->insertProductDetail($insertData);
+        if($insert){
+            $request->session()->flash('insertSuccess','Thêm mới sản phẩm thành công');
+            return redirect()->route('admin.listLaptop');
+        }else{
+            $request->session()->flash('insertError','Thêm mới sản phẩm thất bại. Vui lòng kiểm tra lại');
+            return redirect()->route('admin.createDetail');
+        }
+    }
+
+    public function handleCreateDetail_v2(validateCreateDetail $request, DetailProduct $detail)
+    {
+        $name = $request->namePr;
+        $spec = $request->specPr;
+        $qty = $request->qtyPr;
+        $desc = $request->desPr;
+
+        $insertData = [
+            'id_product' => $name,
+            'id_specification' => $spec,
+            'quantity' => $qty,
+            'description' => $desc,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => null
+        ];
+
+        $insert = $detail->insertProductDetail($insertData);
+        if($insert){
+            $request->session()->flash('insertSuccess','Thêm mới sản phẩm thành công');
+            return redirect()->route('admin.listpc');
+        }else{
+            $request->session()->flash('insertError','Thêm mới sản phẩm thất bại. Vui lòng kiểm tra lại');
+            return redirect()->route('admin.createDetail');
+        }
+    }
+
     public function editDetailPr(Request $request,$id,DetailProduct $detail,Specification $spec)
     {
         $id = $request->id;
@@ -274,6 +363,7 @@ class ProductAdminController extends Controller
             $data['info'] = $infoDetail;
             $data['spec'] = $spec;
             $data['messages'] = $request->session()->get('messages');
+            $data['updateError'] = $request->session()->get('updateError');
 
             return view('admin.product.editDetail',$data);
         }else{
@@ -281,27 +371,35 @@ class ProductAdminController extends Controller
         }
     }
 
-    public function handleEditDetail(validateEditDetail $request, DetailPeoduct $detail, Specification $spec)
+    public function handleEditDetail(validateEditDetail $request, DetailProduct $detail, Specification $spec)
     {
-        $name = $request->namePr;
         $spec = $request->specPr;
         $qty = $request->qtyPr;
         $desc = $request->desPr;
 
         $idDt = $request->id;
         $idDt = is_numeric($idDt) ? $idDt : 0;
-        $infoDetail = $infoDetail->getInfoProductById($idDt);
+        $infoDetail = $detail->getInfoDetailById($idDt);
         $infoDetail = \json_decode(\json_encode($infoDetail),true);
 
         $dataUpdate = [
-            'id_specification' => $type,
-            'description' => $name,
-            'quantity' => $price,
-            'percent' => $percent,
-            'promo_price' => $price - (($price*$percent)/100) ,
-            'image' => $oldAvatar,
-            'status' => $stt,
+            'id_specification' => $spec,
+            'description' => $desc,
+            'quantity' => $qty,
             'updated_at' => date('Y-m-d H:i:s')
         ];
+
+        $updateDt = $detail->updateDetailProductById($dataUpdate,$idDt);
+        if($updateDt){
+            $request->session()->flash('updateSuccess','Cập nhật sản phẩm thành công');
+            if($infoDetail['id_type'] == 1){
+                return redirect()->route('admin.listLaptop');
+            }elseif($infoDetail['id_type'] == 2){
+                return redirect()->route('admin.listpc');
+            }
+        }else{
+            $request->session()->flash('updateError','Cập nhật sản phẩm thất bại');
+            return redirect()->route('admin.editDetail');
+        }
     }
 }

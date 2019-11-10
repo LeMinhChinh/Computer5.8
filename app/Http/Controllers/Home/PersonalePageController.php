@@ -30,7 +30,7 @@ class PersonalePageController extends HomeController
 
         $data['info'] = $info;
         $data['idUser'] = Session::get('idSession');
-        $data['approvalSuccess'] = $request->session()->get('approvalSuccess');
+        $data['approvalError'] = $request->session()->get('approvalError');
         $data['deleteSuccess'] = $request->session()->get('deleteSuccess');
 
         return view('home.user.checkbill',$data);
@@ -41,7 +41,7 @@ class PersonalePageController extends HomeController
         $order = OrderCart::find($id);
         $idUser = Session::get('idSession');
         if($order->status == 1){
-                $request->session()->flash('approvalSuccess','Đơn hàng của bạn đã được duyệt.Bạn không thể hủy');
+                $request->session()->flash('approvalError','Đơn hàng của bạn đã được duyệt.Bạn không thể hủy');
                 return redirect()->route('user.checkBill',['id'=> $idUser]);
         }else{
             $detailOrder = $detailOr->getAllDetailOrder($id);
@@ -94,8 +94,8 @@ class PersonalePageController extends HomeController
         $email = $request->emailAcc;
         $fname = $request->fnameAcc;
         $phone = $request->phoneAcc;
-        $gender = $request->genAcc;
-        $gender =  in_array($gender, ['1','0']) ? $gender : 1;
+        $gender = $request->genderAcc;
+        $gender = in_array($gender, ['0','1']) ? $gender : 0;
         $age = $request->ageAcc;
         $address = $request->addAcc;
 

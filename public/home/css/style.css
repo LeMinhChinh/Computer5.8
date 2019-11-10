@@ -442,7 +442,7 @@ ul.mnboxl ul li:hover > ul{
 }
 .namesp{
 	display: block;
-	height: 35px;
+	height: 60px;
 	border-bottom: 1px solid #e1e1e1;
 	padding: 0 5px;
 	text-align: center;
@@ -505,7 +505,7 @@ ul.mnboxl ul li:hover > ul{
     left: 0;
     right: 0;
     bottom: 25%;
-    margin: 0 auto;
+    margin: -8px auto;
     visibility: hidden;
     -webkit-transform: scale(0);
     -moz-transform: scale(0);

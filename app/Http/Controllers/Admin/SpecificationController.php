@@ -45,7 +45,7 @@ class SpecificationController extends Controller
         $dataInsert = $spec->insertDataSpec($insertSpec);
         if($dataInsert){
             $request->session()->flash('createSpecSuccess','Thêm thông số sản phẩm thành công');
-            return redirect()->route('admin.createProduct');
+            return redirect()->route('admin.createDetail');
         }else{
             $request->session()->flash('createSpecError','Thêm thông số sản phẩm thất bại.Vui lòng kiểm tra lại');
             return redirect()->route('admin.createSpec');

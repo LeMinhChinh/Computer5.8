@@ -21,8 +21,9 @@ class DetailProduct extends Model
     public function getAllDataByCreateAt()
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name')
+                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu')
                     ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->where('p.status',1)
                     ->orderBy('created_at','DESC')
@@ -47,7 +48,8 @@ class DetailProduct extends Model
     public function getAllDataLaptop()
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name')
+                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('type_product AS tp','tp.id','=','tt.id_type')
@@ -60,7 +62,8 @@ class DetailProduct extends Model
     public function getAllDataPC()
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name')
+                    ->select('dp.*','p.status','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('type_product AS tp','tp.id','=','tt.id_type')
@@ -151,17 +154,15 @@ class DetailProduct extends Model
 
     public function insertProductDetail($data)
     {
-        $insert = DB::table('detail_product')->insert($data);
-    	if($insert){
-    		return true;
-    	}
-    	return false;
+        DB::table('detail_product')->insert($data);
+        $id = DB::getPdo()->lastInsertId();
+        return $id;
     }
 
     public function updateDetailProductById($data, $id)
     {
         $up = DB::table('detail_product')
-                ->where('id_product', $id)
+                ->where('id', $id)
                 ->update($data);
         return $up;
     }
@@ -180,11 +181,24 @@ class DetailProduct extends Model
     public function getInfoDetailById($id)
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*','p.name','p.image','s.ram','s.cpu','s.color','s.screen','s.hard_drive','s.battery','s.operating_system','s.size','s.weight')
+                    ->select('dp.*','p.name','p.image','s.ram','s.cpu','s.color','s.screen','s.hard_drive','s.battery','s.operating_system','s.size','s.weight','tp.id AS id_type')
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
                     ->where('dp.id',$id)
                     ->first();
+        return $data;
+    }
+
+    public function getInfoSearch($keyword)
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.price','p.promo_price','p.image','p.name','s.color','s.ram','s.cpu')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->where('p.name','like','%'.$keyword.'%')
+                    ->get();
         return $data;
     }
 }

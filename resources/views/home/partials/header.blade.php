@@ -28,9 +28,9 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div id="search">
-                <form action="" method="post">
-                    <input type="text" name="txt_search" placeholder="Tìm sản phẩm">
-                    <button type="submit" name="btn_search">Tìm kiếm</button>
+                <form action="{{ route('user.search') }}"  method="get">
+                    <input type="text" name="search" placeholder="Tìm sản phẩm" >
+                    <button type="submit" >Tìm kiếm</button>
                 </form>
             </div>
         </div>

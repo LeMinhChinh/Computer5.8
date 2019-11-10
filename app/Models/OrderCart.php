@@ -9,6 +9,31 @@ class OrderCart extends Model
 {
     protected $table = 'order_cart';
 
+    public function getAllData()
+    {
+        $data = DB::table('order_cart')
+                    ->select('*')
+                    ->get();
+        return $data;
+    }
+
+    public function getInfoBillById($id)
+    {
+        $data = DB::table('order_cart AS o')
+                    ->select('o.*')
+                    ->where('o.id',$id)
+                    ->first();
+        return $data;
+    }
+
+    public function updateStatus($data, $id)
+    {
+        $update = DB::table('order_cart')
+                    ->where('id',$id)
+                    ->update($data);
+        return $update;
+    }
+
     public function getAllOrder($id)
     {
         $data = DB::table('order_cart AS o')

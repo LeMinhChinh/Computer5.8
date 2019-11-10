@@ -22,7 +22,7 @@
              @endif
 
              @if ($regisSuccess)
-                <div class="alert alert-danger">
+                <div class="alert alert-success">
                     <h6>{{ $regisSuccess }}</h6>
                 </div>
             @endif

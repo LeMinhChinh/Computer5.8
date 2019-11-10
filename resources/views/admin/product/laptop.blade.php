@@ -11,6 +11,7 @@
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                <a href="{{ route('admin.createDetail') }}" class="btn btn-primary">New Detail</a>
                 <a href="{{ route('admin.listLaptop') }}" class="btn btn-primary">View All</a>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -22,6 +23,18 @@
                     </div>
             </div>
         </div>
+
+        @if ($updateSuccess)
+            <div class="alert alert-success">
+                <h6>{{ $updateSuccess }}</h6>
+            </div>
+        @endif
+
+        @if ($insertSuccess)
+            <div class="alert alert-success">
+                <h6>{{ $insertSuccess }}</h6>
+            </div>
+        @endif
 
         <table class="table table-border table-striped table-hover mt-2">
             <thead>

@@ -10,7 +10,6 @@
     </ol>
     <div>
             <a href="{{ route('admin.product') }}" class="btn btn-primary">Back to List</a>
-            <a href="{{ route('admin.createSpec') }}" class="btn btn-primary">Create Specification</a>
     </div>
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -40,11 +39,6 @@
         </div>
     @endif
 
-    {{-- @if ($createSpecSuccess)
-        <div class="alert alert-danger">
-            <h6>{{ $createSpecSuccess }}</h6>
-        </div>
-    @endif --}}
 
     <form action="{{ route('admin.handleCreateProduct') }}" method="POST" enctype="multipart/form-data">
         @csrf

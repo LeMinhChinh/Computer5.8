@@ -22,10 +22,20 @@ class Product extends Model
         return $data;
     }
 
+    public function getName()
+    {
+        $data = DB::table('product AS p')
+                    ->select('p.*','tp.id AS id_type')
+                    ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
+                    ->join('type_product AS tp','tp.id','=','tt.id_type')
+                    ->orderBy('p.id','ASC')
+                    ->get();
+        return $data;
+    }
+
     public function insertProduct($data)
     {
         DB::table('product')->insert($data);
-        // Lấy ra id vừa insert
         $id = DB::getPdo()->lastInsertId();
         return $id;
     }
@@ -55,16 +65,5 @@ class Product extends Model
                 ->where('id',$id)
                 ->update($data);
         return $up;
-    }
-
-    public function addProductToCart($id)
-    {
-        $data = DB::table('product AS p')
-                    ->select('p.*','dp.*','s.ram','s.cpu','s.color')
-                    ->join('detail_product AS dp','dp.id_product','=','p.id')
-                    ->join('specification AS s','s.id','=','dp.id_specification')
-                    ->where('p.id',$id)
-                    ->first();
-        return $data;
     }
 }

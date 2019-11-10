@@ -20,7 +20,7 @@
                                         </div> --}}
                                     </div>
                                     <div class="namesp">
-                                        <a href="">{{ $pc['name'] }}</a>
+                                        <p class="namesp">{{ $pc['name'] }} <br>  {{ $pc['ram'] }} / {{ $pc['color'] }} / {{ $pc['cpu'] }}</p>
                                     </div>
                                     @if ($pc['price'] != $pc['promo_price'])
                                         <div class="pricesp"><span>Giá bán: </span>{{ number_format($pc['price'] ,0 ,'.' ,'.').'' }}&#8363;</div>

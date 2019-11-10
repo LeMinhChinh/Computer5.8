@@ -48,6 +48,9 @@ Route::group([
 
     /* Bill */
     Route::post('create-bill','CartController@createBill')->name('createBill');
+
+    /* Search */
+    Route::get('seach-product/key','SearchController@search')->name('search');
 });
 Route::group([
     'prefix' => 'admin',
@@ -86,15 +89,22 @@ Route::group([
     Route::get('update-product/{id}','ProductAdminController@editProduct')->name('editProduct');
     Route::post('handle-update-product/{id}','ProductAdminController@handleEditProduct')->name('handleEditProduct');
 
+    Route::get('create-detail-product','ProductAdminController@createDetail')->name('createDetail');
+    Route::get('create-detail-product_v2','ProductAdminController@createDetail_v2')->name('createDetail_v2');
+    Route::post('handle-create-detail','ProductAdminController@handleCreateDetail')->name('handleCreateDetail');
+    Route::post('handle-create-detail_v2','ProductAdminController@handleCreateDetail_v2')->name('handleCreateDetail_v2');
+
     Route::get('update-detail-product/{id}','ProductAdminController@editDetailPr')->name('editDetailPr');
-    Route::get('handle-update-detail-product/{id}','ProductAdminController@handleEditDetailPr')->name('handleEditDetailPr');
+    Route::post('handle-update-detail-product/{id}','ProductAdminController@handleEditDetail')->name('handleEditDetailPr');
 
     /* Specification */
     Route::get('create-specification','SpecificationController@createSpec')->name('createSpec');
     Route::post('handle-create-specification','SpecificationController@handleCreateSpec')->name('handleCreateSpec');
 
-    /* Bills */
-    Route::get('bill','BillController@index')->name('bill');
+    /* Bill */
+    Route::get('bill','BillController@billOrder')->name('bill');
+    Route::get('edit-bill/{id}','BillController@editBill')->name('editBill');
+    Route::post('handle-edit-bill/{id}','BillController@handleEditBill')->name('handleEditBill');
 
     /* News */
     Route::get('news','NewsController@index')->name('news');

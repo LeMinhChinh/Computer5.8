@@ -34,7 +34,7 @@
         <div class="col-md-4">
             <div>
                 <a href="{{ route('admin.account') }}" class="btn btn-primary" style="color:#fff">Back To List</a>
-                <img src="{{ URL::to('/') }}/Uploads/images/{{ $info['avatar'] }}" class="img-fluid"style="width:400px;height:350px;margin:45px">
+                <img src="{{ URL::to('/') }}/Uploads/avatar/{{ $info['avatar'] }}" class="img-fluid"style="width:400px;height:350px;margin:45px">
             </div>
         </div>
         <div class="col-md-8">
@@ -70,12 +70,24 @@
                             <input type="text" class="form-control" id="addAcc" name="addAcc" value="{{ $info['address'] }}" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="roleAcc">Role (*)</label>
-                            <input type="text" class="form-control" id="roleAcc" name="roleAcc" value="{{ $info['role'] }}">
+                            <label>Role (*)</label>
+                            <br>
+                            <label class="radio-inline">
+                                <input name="roleAcc" value="0" type="radio" @if($info['role'] == 0 ) checked="" @endif >Khách hàng
+                            </label>
+                            <label class="radio-inline" style="margin-left:40px">
+                                <input name="roleAcc" value="1" type="radio"  @if($info['role']== 1 ) checked="" @endif >Admin
+                            </label>
                         </div>
                         <div class="form-group">
-                            <label for="sttAcc">Status (*)</label>
-                            <input type="text" class="form-control" id="sttAcc" name="sttAcc" value="{{ $info['status'] }}">
+                            <label>Status (*)</label>
+                            <br>
+                            <label class="radio-inline">
+                                <input name="sttAcc" value="0" type="radio" @if($info['status'] == 0 ) checked="" @endif >Deactive
+                            </label>
+                            <label class="radio-inline" style="margin-left:40px">
+                                <input name="sttAcc" value="1" type="radio"  @if($info['status']== 1 ) checked="" @endif >Active
+                            </label>
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnUpdate" name="btnUpdate" style="margin-left:40%;margin-bottom:20px">Confirm</button>
                     </div>

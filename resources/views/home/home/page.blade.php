@@ -103,7 +103,8 @@
                                             </div>
                                         </div>
                                         <div class="namesp">
-                                            <a href="">{{ $hotPr['name'] }}</a>
+                                            {{-- <a href="">{{ $hotPr['name'] }}</a> --}}
+                                            <p class="namesp">{{ $hotPr['name'] }} <br>  {{ $hotPr['ram'] }} / {{ $hotPr['color'] }} / {{ $hotPr['cpu'] }}</p>
                                         </div>
                                         @if ($hotPr['price'] != $hotPr['promo_price'])
                                             <div class="pricesp"><span>Giá bán: </span>{{ number_format($hotPr['price'] ,0 ,'.' ,'.').'' }}&#8363;</div>
@@ -118,10 +119,17 @@
                                         </div>
                                         <div class="row" style="margin-top:10px">
                                             <div class="col-md-6">
-                                                    <a href="#" style="color:#2cc067;text-decoration:none;padding-left:15px">
-                                                        <span class="glyphicon glyphicon-ok"></span>
-                                                        Còn hàng
-                                                    </a>
+                                                    @if ($hotPr['quantity'] != 0)
+                                                        <a href="#" style="color:#2cc067;text-decoration:none;padding-left:15px">
+                                                            <span class="glyphicon glyphicon-ok"></span>
+                                                            Còn hàng
+                                                        </a>
+                                                    @elseif($hotPr['quantity'] ==0)
+                                                        <a href="#" style="color:red;text-decoration:none;padding-left:15px">
+                                                            <span class="glyphicon glyphicon-remove"></span>
+                                                            Hết hàng
+                                                        </a>
+                                                    @endif
                                             </div>
                                             <div class="col-md-6 text-right">
                                                 <a href="{{ route('user.addCart',['id' => $hotPr['id'],'quant' => $hotPr['quantity']]) }}" style="color:red;text-decoration:none;padding-right:15px">
@@ -152,7 +160,7 @@
                                     </div> --}}
                                 </div>
                                 <div class="namesp">
-                                    <a href="">{{ $laptop['name'] }}</a>
+                                    <p class="namesp">{{ $laptop['name'] }} <br>  {{ $laptop['ram'] }} / {{ $laptop['color'] }} / {{ $laptop['cpu'] }}</p>
                                 </div>
                                 @if ($laptop['price'] != $laptop['promo_price'])
                                     <div class="pricesp"><span>Giá bán: </span>{{ number_format($laptop['price'] ,0 ,'.' ,'.').'' }}&#8363;</div>
@@ -162,17 +170,16 @@
                                     <div class="pricesp"></div>
                                 @endif
                                 <div class="button-hd">
-                                    {{-- <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a> --}}
                                     <a href="{{ route('user.detailProduct',['id' => $laptop['id']]) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="row" style="margin-top:10px">
                                     <div class="col-md-6">
-                                        @if ($laptop['status'] ==1)
+                                        @if ($laptop['quantity'] != 0)
                                             <a href="#" style="color:#2cc067;text-decoration:none;padding-left:15px">
                                                 <span class="glyphicon glyphicon-ok"></span>
                                                 Còn hàng
                                             </a>
-                                        @elseif($laptop['status'] ==0)
+                                        @elseif($laptop['quantity'] ==0)
                                             <a href="#" style="color:red;text-decoration:none;padding-left:15px">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                                 Hết hàng
@@ -207,7 +214,7 @@
                                     </div> --}}
                                 </div>
                                 <div class="namesp">
-                                    <a href="">{{ $pc['name'] }}</a>
+                                    <p class="namesp">{{ $pc['name'] }} <br>  {{ $pc['ram'] }} / {{ $pc['color'] }} / {{ $pc['cpu'] }}</p>
                                 </div>
                                 @if ($pc['price'] != $pc['promo_price'])
                                     <div class="pricesp"><span>Giá bán: </span>{{ number_format($pc['price'] ,0 ,'.' ,'.').' đ' }}</div>
@@ -218,22 +225,21 @@
                                 @endif
 
                                 <div class="button-hd">
-                                    {{-- <a href=""><i class="fa fa-shopping-cart" aria-hidden="true"></i></a> --}}
                                     <a href="{{ route('user.detailProduct',['id' => $pc['id']]) }}"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="row" style="margin-top:10px">
                                     <div class="col-md-6">
-                                            @if ($pc['status'] ==1)
-                                            <a href="#" style="color:#2cc067;text-decoration:none;padding-left:15px">
+                                            @if ($pc['quantity'] != 0)
+                                                <a href="#" style="color:#2cc067;text-decoration:none;padding-left:15px">
                                                 <span class="glyphicon glyphicon-ok"></span>
                                                 Còn hàng
                                             </a>
-                                        @elseif($pc['status'] ==0)
-                                            <a href="#" style="color:red;text-decoration:none;padding-left:15px">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                                Hết hàng
-                                            </a>
-                                        @endif
+                                            @elseif($pc['quantity'] ==0)
+                                                <a href="#" style="color:red;text-decoration:none;padding-left:15px">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                    Hết hàng
+                                                </a>
+                                            @endif
                                     </div>
                                     <div class="col-md-6 text-right">
                                         <a href="{{ route('user.addCart',['id' => $pc['id'],'quant' => $pc['quantity']]) }}" style="color:red;text-decoration:none;padding-right:15px">

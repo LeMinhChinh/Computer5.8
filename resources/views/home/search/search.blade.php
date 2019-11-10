@@ -2,16 +2,15 @@
 @section('title', "ListProduct")
 @section('content')
     <div class="container" style="margin-top:15px">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-10">
+
+
                 <div class="boxmain">
                     <div class="tit-boxmain title-detail">
-                            <a href="{{ route('user.home') }}">Trang chủ / </a><a href="" >{{ $laptopType->type }} / </a><a href="" style="color:red">{{ $laptopType->type }} {{ $laptopTrade->name_trade }}</a>
+                        <a href="{{ route('user.home') }}">Trang chủ / </a><a href="" style="color:red">Search</a>
                     </div>
                     <div class="ct-boxmain row">
-                        @foreach ($listpcName as $key => $pr)
-                            <div class="col-md-4 p5" style="margin-top:20px">
+                        @foreach ($search as $pr)
+                            <div class="col-md-3 p5" style="margin-top:20px">
                                 <div class="boxsp">
                                     <div class="imgsp">
                                         <a href=""><img class="imgproduct" src="{{ URL::to('/') }}/Uploads/images/{{ $pr['image'] }}" style="height:190px"></a>
@@ -49,8 +48,6 @@
                         @endforeach
                     </div>
                     {{-- {!! $paginate->links() !!} --}}
-                </div>
-            </div>
-        </div>
+
     </div>
 @endsection

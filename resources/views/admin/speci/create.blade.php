@@ -9,7 +9,7 @@
         <li class="breadcrumb-item active">Create Specification</li>
     </ol>
     <div>
-        <a href="{{ route('admin.createProduct') }}" class="btn btn-primary">Back to Create Product</a>
+        <a href="{{ route('admin.createDetail') }}" class="btn btn-primary">Back to Create Detail</a>
     </div>
     @if ($errors->any())
         <div class="alert alert-danger">

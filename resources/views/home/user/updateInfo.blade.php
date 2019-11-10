@@ -13,7 +13,6 @@
                     <span class="glyphicon glyphicon-user"></span>
                     </span> {{ Session::get('userSession') }}
                 </button>
-                {{-- <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.checkInfo',['id' => $idUser]) }}" style="text-decoration:none">Thông tin cá nhân</a></button> --}}
                 <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.checkInfo') }}" style="text-decoration:none">Thông tin cá nhân</a></button>
                 <button type="button" class="list-group-item list-group-item-action"><a href="{{ route('user.checkBill',['id' => $idUser ]) }}" style="text-decoration:none">Danh sách đơn hàng</a></button>
                 <button type="button" class="list-group-item list-group-item-action"><a href="" style="text-decoration:none">Cập nhật thông tin</a></button>
@@ -73,19 +72,14 @@
                             <input type="text" class="form-control" id="phoneAcc" name="phoneAcc" value="{{ $infoAcc['phone'] }}">
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Gender (*)</label>
-                            <div class="row" style="margin-top:5px">
-                                <div class="col-sm-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="maleRadio" name="gender" value="1" {{ $infoAcc['gender'] == 1 ? 'checked=checked' : '' }}>Nam
-                                    </label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="femaleRadio" name="gender" value="0" {{ $infoAcc['gender'] == 0 ? 'checked=checked' : '' }}>Nữ
-                                    </label>
-                                </div>
-                            </div>
+                            <label>Gender (*)</label>
+                            <br>
+                            <label class="radio-inline">
+                                <input name="genderAcc" value="0" type="radio" @if($infoAcc['gender'] == 0 ) checked="" @endif >Nữ
+                            </label>
+                            <label class="radio-inline" style="margin-left:40px">
+                                <input name="genderAcc" value="1" type="radio"  @if($infoAcc['gender']== 1 ) checked="" @endif >Nam
+                            </label>
                         </div>
                         <div class="form-group">
                             <label for="ageAcc">Age (*)</label>

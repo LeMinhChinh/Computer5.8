@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class validateEditDetail extends FormRequest
+class validateCreateDetail extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,23 +25,20 @@ class validateEditDetail extends FormRequest
     {
         return [
             'namePr' => 'required',
-            'qtyPr' => 'required',
-            'desPr' => 'required',
-            'specPr' => 'required'
+            'specPr' => 'required',
+            'qtyPr' => 'required'
         ];
     }
 
     public function messages()
     {
         return [
-            'namePr.required' => 'Vui lòng nhập trên sản phẩm',
+            'namePr.required' => 'Vui lòng chọn tên sản phẩm',
 
-            'qtyPr.required' => 'Vui lòng nhập số lượng sản phẩm',
-            'qtyPr.numeric' => 'Số lượng sản phẩm phải là số',
+            'specPr.required' => 'Vui lòng chọn thông số sản phẩm',
+            'specPr.unique' => 'Sản phẩm đã tồn tại',
 
-            'desPr.required' => 'Vui lòng nhập miêu tả sản phẩm',
-
-            'specPr.required' => 'Vui lòng chọn thông số sản phẩm'
+            'qtyPr.required' => 'Vui lòng nhập số lượng sản phẩm'
         ];
     }
 }

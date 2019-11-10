@@ -24,17 +24,11 @@
         </div>
     @endif
 
-    {{-- @if ($errorAvatar)
+    @if ($updateError)
         <div class="alert alert-danger">
-            <h6>{{ $errorAvatar }}</h6>
+            <h6>{{ $updateError }}</h6>
         </div>
     @endif
-
-    @if ($updateProductError)
-        <div class="alert alert-danger">
-            <h6>{{ $updateProductError }}</h6>
-        </div>
-    @endif --}}
 
     <div class="row">
         <div class="col-md-4">
@@ -44,12 +38,12 @@
             </div>
         </div>
         <div class="col-md-8">
-            <form action="{{ route('admin.handleEditProduct',['id' => $info['id']]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.handleEditDetailPr',['id' => $info['id']]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                     <div class="col-12 col-sm-12 col-md-8 col-lg-8 offset-md-1">
                         <div class="form-group">
-                            <label for="namePr">Name (*)</label>
-                            <input type="text" class="form-control" id="namePr" name="namePr" value="{{ $info['name'] }}">
+                            <label for="namePr">Name</label>
+                            <input type="text" class="form-control" id="namePr" name="namePr" value="{{ $info['name'] }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="specPr">Specification (*)</label>

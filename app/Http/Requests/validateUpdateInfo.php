@@ -28,7 +28,7 @@ class validateUpdateInfo extends FormRequest
             'emailAcc' => 'required|email',
             'fnameAcc' => 'required',
             'phoneAcc' => 'required|numeric|min:10',
-            // 'genAcc' => 'required',
+            'genAcc' => 'required',
             'ageAcc' => 'required',
             'addAcc' => 'required'
         ];
@@ -48,7 +48,7 @@ class validateUpdateInfo extends FormRequest
             'phoneAcc.numeric' => 'Định dạng số điện thoại không đúng',
             'phoneAcc.min' => 'Số điện thoại không đúng',
 
-            // 'genAcc.required' => 'Vui lòng chọn giới tính',
+            'genAcc.required' => 'Vui lòng chọn giới tính',
 
             'ageAcc.required' => 'Vui lòng nhập ngày sinh',
 

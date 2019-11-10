@@ -5,9 +5,9 @@
     <div class="container" style="width:1300px">
         <div style="margin-top:20px" class="title-detail">
             <a href="{{ route('user.home') }}">Trang chủ / </a><a href="">Trang cá nhân / </a><a href=""  style="color:red">Thông tin đơn hàng</a>
-            @if ($approvalSuccess)
-                <div class="alert alert-success">
-                    <h6>{{ $approvalSuccess }}</h6>
+            @if ($approvalError)
+                <div class="alert alert-danger">
+                    <h6>{{ $approvalError }}</h6>
                 </div>
             @endif
 

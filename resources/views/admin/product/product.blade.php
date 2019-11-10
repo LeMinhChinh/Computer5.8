@@ -8,16 +8,6 @@
         <li class="breadcrumb-item active">Overview</li>
     </ol>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     @if($createProductSuccess)
 		<div class="alert alert-success my-3">
 			<h6>{{ $createProductSuccess }}</h6>
@@ -28,7 +18,8 @@
 		<div class="alert alert-success my-3">
 			<h6>{{ $updateProductSuccess }}</h6>
 		</div>
-	@endif
+    @endif
+
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row">
             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -36,7 +27,7 @@
                 <a href="{{ route('admin.product') }}" class="btn btn-primary">View All</a>
             </div>
 
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            {{-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                 <div class="dropdown"  style="margin-left:-269px">
                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                         Filter Product
@@ -48,7 +39,7 @@
                         <li><a href="#" style="text-decoration:none;padding-left:15px">Quantity</a></li>
                     </ul>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}">

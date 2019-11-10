@@ -17,7 +17,7 @@
                                         <a href=""><img class="imgproduct" src="{{ URL::to('/') }}/Uploads/images/{{ $pr['image'] }}" style="height:190px"></a>
                                     </div>
                                     <div class="namesp">
-                                        <a href="">{{ $pr['name'] }}</a>
+                                        <p class="namesp">{{ $pr['name'] }} <br>  {{ $pr['ram'] }} / {{ $pr['color'] }} / {{ $pr['cpu'] }}</p>
                                     </div>
                                     @if ($pr['price'] != $pr['promo_price'])
                                         <div class="pricesp"><span>Giá bán: </span>{{ number_format($pr['price'] ,0 ,'.' ,'.').'' }}&#8363;</div>

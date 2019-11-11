@@ -37,6 +37,7 @@ Route::group([
     Route::post('handle-update-info','PersonalePageController@handleUpdateInfo')->name('handleUpdateInfo');
     Route::get('check-bill/{id}','PersonalePageController@checkBill')->name('checkBill');
     Route::get('delete-bill/{id}','PersonalePageController@deleteBill')->name('deleteBill');
+    Route::get('detail_bill/{id}','PersonalePageController@detailBill')->name('detailBill');
 
     /* Cart */
     Route::get('cart/{id}~{quant}','CartController@addCart')->name('addCart');

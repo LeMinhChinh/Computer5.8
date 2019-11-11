@@ -103,8 +103,10 @@ class DetailProduct extends Model
 
     public function getAllPCByTypeTrade($idtrade)
     {
-        $data = DB::table('product AS p')
-                    ->select('p.*')
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->join('product AS p','p.id','=','dp.id_product')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
                     ->join('trademark AS tm','tm.id','=','tt.id_trade')
                     ->join('type_product AS tp','tp.id','=','tt.id_type')

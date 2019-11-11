@@ -10,17 +10,24 @@
 				<div class="wrapper row">
 					<div class="preview col-md-6">
 						<div class="preview-pic tab-content">
-						  @if ($detailPr['id_typepr'] == 1)
+                        @if ($detailPr['id_typepr'] == 1)
                             <div class="tab-pane active" id="pic-1"><img src="{{ URL::to('/') }}/Uploads/images/{{ $detailPr['image'] }}" /></div>
-                          @elseif($detailPr['id_typepr'] == 2)
+                        @elseif($detailPr['id_typepr'] == 2)
                             <div class="tab-pane active" id="pic-1"><img src="{{ URL::to('/') }}/Uploads/images/{{ $detailPr['image'] }}" /></div>
-                          @endif
+                        @endif
+                        <a href="{{ route('user.addCart',['id' => $detailPr['id'],'quant' => $detailPr['quantity']]) }}" class="btn btn-primary" style="margin-left:30%;margin-top:50px;line-height:50px">ADD MY CART</a>
 						</div>
 					</div>
 					<div class="details col-md-6" style="font-size:17px">
 						<h3 class="product-title">{{ $detailPr['name'] }}</h3>
 						<div class="rating">
-                            <p class="review-no">Kho hàng : <span style="color:#ffa53f">Còn hàng</span></p>
+                            <p class="review-no">Kho hàng : <span style="color:#ffa53f">
+                                @if ($detailPr['quantity'] != 0)
+                                    Còn hàng
+                                @elseif($detailPr['quantity'] == 0)
+                                    Hết hàng
+                                @endif
+                            </span></p>
                         </div>
                         <div>
                             <p class="product-title">Thông số sản phẩm</p>
@@ -60,9 +67,9 @@
                                             <td style="width:35%;height:50px">Giá khuyến mãi</td>
                                             <td style="font-weight:bolder;font-size:25px;color:red">{{ number_format($detailPr['promo_price'] ,0 ,'.' ,'.').'' }}&#8363;</td>
                                         </tr>
-                                        {{-- <tr>
+                                        <tr>
                                             <td colspan="2" style="width:35%;height:50px;text-align:center">Giảm giá tới {{ $detailPr['percent'] }}%</td>
-                                        </tr> --}}
+                                        </tr>
                                     </tbody>
                                 </table>
                             @endif

@@ -16,6 +16,7 @@ class ProductController extends HomeController
     {
         $detailPr = $detail->getDataProductById($id);
         $detailPr = \json_decode(json_encode($detailPr),true);
+        // dd($detailPr);
 
         $data['detailPr'] = $detailPr;
 
@@ -35,7 +36,7 @@ class ProductController extends HomeController
             $data['laptop'] = $laptop;
 
             return view('home.product.listlaptop',$data);
-        }{
+        }elseif($idtype == 2){
             $listpc = $detail->getAllProductByIdType($idtype);
             $data['paginate'] = $listpc;
             $listpc = json_decode(json_encode($listpc),true);

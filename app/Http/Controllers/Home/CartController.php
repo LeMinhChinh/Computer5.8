@@ -13,30 +13,32 @@ use Cart;
 use DB;
 use App\Http\Requests\validateCreateBill;
 use App\Http\Controllers\Home\HomeController;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends HomeController
 {
     public function addCart($id,$quant,Product $product,DetailProduct $detail)
     {
         $orderPr = $detail->addProductToCart($id);
-        if($orderPr->quantity >= 0){
+        $orderPr = \json_decode(\json_encode($orderPr),true);
+        if($orderPr['quantity'] >= 0){
             if(!empty(Session::get('idSession'))){
                 $idUser = Session::get('idSession');
             }else{
                 $idUser = -1;
             }
-            $price = $orderPr->promo_price == 0 ?  $orderPr->price : $orderPr->promo_price;
+            $price = $orderPr['promo_price'] == 0 ?  $orderPr['price'] : $orderPr['promo_price'];
             Cart::session($idUser)
                 ->add([
-                    'id' => $orderPr->id,
-                    'name' => $orderPr->name,
+                    'id' => $orderPr['id'],
+                    'name' => $orderPr['name'],
                     'quantity' => 1,
                     'price' => $price,
                     'attributes'=>[
-                            'image'=> $orderPr->image,
-                            'ram' => $orderPr->ram,
-                            'cpu' => $orderPr->cpu,
-                            'color' => $orderPr->color,
+                            'image'=> $orderPr['image'],
+                            'ram' => $orderPr['ram'],
+                            'cpu' => $orderPr['cpu'],
+                            'color' => $orderPr['color']
                     ]
             ]);
             $data['carts'] = Cart::getContent();

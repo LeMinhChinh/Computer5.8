@@ -41,7 +41,6 @@ class UserController extends HomeController
             $request->session()->flash('errLogin','Username or Password invalid');
             return redirect()->route('admin.login');
         }
-
     }
 
     public function handleLogout(Request $request)

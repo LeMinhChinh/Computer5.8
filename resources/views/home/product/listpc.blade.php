@@ -35,13 +35,20 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a href="#" style="color:#2cc067;text-decoration:none;padding-left:15px">
-                                                <span class="glyphicon glyphicon-ok"></span>
-                                                Còn hàng
-                                            </a>
+                                            @if ($pc['quantity'] != 0)
+                                                <a href="#" style="color:#2cc067;text-decoration:none;padding-left:15px">
+                                                    <span class="glyphicon glyphicon-ok"></span>
+                                                    Còn hàng
+                                                </a>
+                                            @elseif($pc['quantity'] ==0)
+                                                <a href="#" style="color:red;text-decoration:none;padding-left:15px">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                    Hết hàng
+                                                </a>
+                                            @endif
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <a href="#" style="color:red;text-decoration:none;padding-right:15px">
+                                            <a href="{{ route('user.addCart',['id' => $pc['id'],'quant' => $pc['quantity']]) }}" style="color:red;text-decoration:none;padding-right:15px">
                                                 <span class="glyphicon glyphicon-shopping-cart"></span>
                                                 Giỏ hàng
                                             </a>

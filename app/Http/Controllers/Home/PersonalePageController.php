@@ -57,6 +57,18 @@ class PersonalePageController extends HomeController
         }
     }
 
+    public function detailBill($id,DetailOrderCart $detailOr)
+    {
+        $info = $detailOr->getInfoDetail($id);
+        $info = \json_decode(\json_encode($info),true);
+        // dd($info);
+
+        $data['idUser'] = Session::get('idSession');
+        $data['info'] = $info;
+
+        return view('home.user.detailbill',$data);
+    }
+
     public function checkInfo(User $acc,Request $request)
     {
         $id = Session::get('idSession');

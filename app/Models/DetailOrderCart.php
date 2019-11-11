@@ -26,4 +26,16 @@ class DetailOrderCart extends Model
                     ->delete();
         return $del;
     }
+
+    public function getInfoDetail($id)
+    {
+        $data = DB::table('detail_order AS do')
+                    ->select('do.*','p.name','p.image')
+                    ->join('order_cart AS o','o.id','=','do.id_cart')
+                    ->join('detail_product AS dp','dp.id','=','do.id_detailproduct')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->where('do.id_cart',$id)
+                    ->get();
+        return $data;
+    }
 }

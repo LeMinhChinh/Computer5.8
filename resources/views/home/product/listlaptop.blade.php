@@ -18,6 +18,7 @@
                                     </div>
                                     <div class="namesp">
                                         <p class="namesp">{{ $pr['name'] }} <br>  {{ $pr['ram'] }} / {{ $pr['color'] }} / {{ $pr['cpu'] }}</p>
+                                        {{-- <p>{{ $pr['name'] }}</p> --}}
                                     </div>
                                     @if ($pr['price'] != $pr['promo_price'])
                                         <div class="pricesp"><span>Giá bán: </span>{{ number_format($pr['price'] ,0 ,'.' ,'.').'' }}&#8363;</div>

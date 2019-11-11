@@ -29,6 +29,7 @@ class ProductController extends HomeController
             $data['paginate'] = $listlaptop;
             $listlaptop = json_decode(json_encode($listlaptop),true);
             $data['listlaptop'] = $listlaptop['data'] ?? [];
+            // dd($data['listlaptop']);
             $laptop = Category::find($idtype);
 
             $data['laptop'] = $laptop;

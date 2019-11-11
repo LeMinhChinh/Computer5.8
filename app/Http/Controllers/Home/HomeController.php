@@ -66,15 +66,4 @@ class HomeController extends Controller
         return view('home.home.error');
     }
 
-    // public function search(Request $request, DetailProduct $detail)
-    // {
-    //     $key = $request->key;
-    //     dd($key);
-    //     $dataSearch = $detail->getInfoSearch($key);
-    //     $dataSearch = \json_decode(\json_encode($dataSearch),true);
-
-    //     $data['search'] = $dataSearch;
-
-    //     return view('home.search.search',$data);
-    // }
 }

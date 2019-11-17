@@ -51,14 +51,14 @@
                                     <li>Màu sắc : {{ $item['attributes']['color'] }}</li>
                                 </ul>
                             </div>
-                            <p style="padding:50px 0 0 20px;color:red"><i class="fa fa-trash" ></i><a href="{{ route('user.deleteProduct',['id' => $item['id']]) }}" style="color:red;text-decoration:none;font-size:15px">    Xóa sản phẩm</a></p>
+                            <p style="padding:50px 0 0 20px;color:red"><a href="{{ route('user.deleteProduct',['id' => $item['id']]) }}" style="text-decoration:none;font-size:15px" class="btn btn-danger">    Xóa sản phẩm</a></p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <p class="product-title">Giá : {{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</p>
                             <p><input type="number" value="{{ $item['quantity'] }}" min="1" class="qty"></p>
                             <p class="product-title">Tổng giá : {{ number_format($item['price']*$item['quantity'] ,0 ,'.' ,'.').'' }}&#8363;</p>
-                            <button type="submit" class="btn btn-primary updatecart">Update</button>
+                            <button type="submit" class="btn btn-primary updatecart" style="margin-top:60px">Cập nhật số lượng</button>
                             <input type="hidden" name="" value="{{ $item['id'] }}" class="idcart">
                         </div>
                     </div>

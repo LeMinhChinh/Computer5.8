@@ -10,15 +10,17 @@
     </ol>
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                 <a href="{{ route('admin.createDetail_v2') }}" class="btn btn-primary">New Detail</a>
                 <a href="{{ route('admin.listpc') }}" class="btn btn-primary">View All</a>
             </div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Searching..." id="js-keyword" value="{{ $keyword }}">
+                <input type="text" class="form-control" placeholder="Searching for..." id="js-keyword" value="{{ $keyword }}">
                 <div class="input-group-append">
-                    <button class="input-group-text" id="js-search">Search</button>
+                    <button class="btn btn-primary" type="button" id="js-search">
+                    <i class="fas fa-search"></i>
+                    </button>
                 </div>
             </div>
         </div>

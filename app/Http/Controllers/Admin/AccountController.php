@@ -11,9 +11,10 @@ class AccountController extends Controller
     public function account(Request $request,User $user)
     {
         $lstAccount = $user->getAllData();
+        $data['paginate'] = $lstAccount;
         $lstAccount = \json_decode(json_encode($lstAccount),true);
 
-        $data['lstAccount'] = $lstAccount;
+        $data['lstAccount'] = $lstAccount['data'] ?? [];
         $data['updateAccountSuccess'] = $request->session()->get('updateAccountSuccess');
 
         return view('admin.account.account',$data);

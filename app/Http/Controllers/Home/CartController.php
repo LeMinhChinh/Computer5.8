@@ -41,7 +41,7 @@ class CartController extends HomeController
                             'color' => $orderPr['color']
                     ]
             ]);
-            $data['carts'] = Cart::getContent();
+            // $data['carts'] = Cart::getContent();
             return redirect()->route('user.showCart');
         }else{
             return redirect()->route('user.home');
@@ -159,7 +159,7 @@ class CartController extends HomeController
         $newBill->save();
 
         foreach ($carts as $cart) {
-            $orderPr = $detail->addProductToCart($cart['id']);
+
             $detailBill = new DetailOrderCart;
             $detailBill->id_cart =  $newBill->id;
             $detailBill->id_detailproduct= $cart['id'];
@@ -167,8 +167,8 @@ class CartController extends HomeController
             $detailBill->price =$cart['price'];
 
             $detailBill->save();
-            print_r($detail);
 
+            $orderPr = $detail->addProductToCart($cart['id']);
             $qty = $orderPr->quantity - $cart['quantity'];
             DB::table('detail_product AS dp')
                     ->select('dp.*','p.name','p.image','p.price','p.promo_price','s.ram','s.cpu','s.color','p.id AS id_product')

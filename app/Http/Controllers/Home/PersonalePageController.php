@@ -61,7 +61,6 @@ class PersonalePageController extends HomeController
     {
         $info = $detailOr->getInfoDetail($id);
         $info = \json_decode(\json_encode($info),true);
-        // dd($info);
 
         $data['idUser'] = Session::get('idSession');
         $data['info'] = $info;

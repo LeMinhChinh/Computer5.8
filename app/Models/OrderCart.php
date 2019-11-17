@@ -13,7 +13,7 @@ class OrderCart extends Model
     {
         $data = DB::table('order_cart')
                     ->select('*')
-                    ->get();
+                    ->paginate(10);
         return $data;
     }
 

@@ -43,17 +43,17 @@
                             @if ($detailPr['price'] != $detailPr['promo_price'])
                                 <table class="table" style="background-color:#f0f0f0">
                                     <tbody>
-                                    <tr class="table-active">
-                                        <td style="width:35%">Giá bán</td>
-                                        <td style="font-weight:bolder;text-decoration:line-through;font-size:25px">{{ number_format($detailPr['price'] ,0 ,'.' ,'.').'' }}&#8363;</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width:35%;height:50px">Giá khuyến mãi</td>
-                                        <td style="font-weight:bolder;font-size:25px;color:red">{{ number_format($detailPr['promo_price'] ,0 ,'.' ,'.').'' }}&#8363;</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" style="width:35%;height:50px;text-align:center;color:red;font-weight:bolder">Giảm giá tới {{ $detailPr['percent'] }}%</td>
-                                    </tr>
+                                        <tr class="table-active">
+                                            <td style="width:35%">Giá bán</td>
+                                            <td style="font-weight:bolder;text-decoration:line-through;font-size:25px">{{ number_format($detailPr['price'] ,0 ,'.' ,'.').'' }}&#8363;</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:35%;height:50px">Giá khuyến mãi</td>
+                                            <td style="font-weight:bolder;font-size:25px;color:red">{{ number_format($detailPr['promo_price'] ,0 ,'.' ,'.').'' }}&#8363;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" style="width:35%;height:50px;text-align:center;color:red;font-weight:bolder">Giảm giá tới {{ $detailPr['percent'] }}%</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             @elseif($detailPr['price'] == $detailPr['promo_price'])
@@ -130,6 +130,23 @@
             <div class="col-md-6">
                 <div style="margin-top:40px">
                     <h2 class="product-title">Sản phẩm tương đương</h2>
+                       @foreach ($similar as $item)
+                        <div class="row" style="border-bottom:1px solid #f0f0f0;margin-top:20px">
+                            <div class="col-md-4">
+                                <a href=""><img class="imgproduct" src="{{ URL::to('/') }}/Uploads/images/{{ $item['image'] }}" style="height:170px"></a>
+                            </div>
+                            <div class="col-md-8">
+                                <a href="{{ route('user.detailProduct',['id' => $item['id']]) }}" style="text-decoration:none;color:black">{{ $item['name'] }} <br>  {{ $item['ram'] }} / {{ $item['color'] }} / {{ $item['cpu'] }}</a>
+                                @if ($item['price'] != $item['promo_price'])
+                                    <div class="pricesp"><span>Giá bán: </span>{{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</div>
+                                    <div class="pricesp-promo">Giá khuyến mãi:<span>{{ number_format($item['promo_price'] ,0 ,'.' ,'.').' ' }}&#8363;</span></div>
+                                @elseif($item['price'] == $item['promo_price'])
+                                    <div class="pricesp-default"><span>Giá bán: </span>{{ number_format($item['price'] ,0 ,'.' ,'.').'' }}&#8363;</div>
+                                    <div class="pricesp"></div>
+                                @endif
+                            </div>
+                        </div>
+                       @endforeach
                 </div>
             </div>
         </div>

@@ -43,7 +43,6 @@
                     <th>Status</th>
                     <th>Total</th>
                     <th>Note</th>
-                    {{-- <th colspan="2" width="5%">Action</th> --}}
                     <th>Action</th>
                 </tr>
             </thead>
@@ -91,44 +90,12 @@
                         <td>
                             <a href="{{ route('admin.editBill',['id' => $or['id']]) }}" class="btn btn-info">Approval</a>
                         </td>
-                        {{-- <td>
-                            <button id="{{ $or['id'] }}" class="btn btn-sm btn-danger js-delete-bill">Delete</button>
-                        </td> --}}
                     </tr>
                 @endforeach
             </tbody>
         </table>
-        {{-- {{ $paginate->appends(request()->query())->links() }} --}}
-        {{-- {{ $paginate->links() }} --}}
+        <div style="margin-left:45%">
+            {{ $paginate->links() }}
+        </div>
     </div>
 @endsection
-
-{{-- @push('scripts')
-    <script>
-        $(function(){
-            $('.js-delete-account').click(function() {
-                var self = $(this);
-                var idAccount = self.attr('id').trim();
-                if($.isNumeric(idAccount)){
-                    $.ajax({
-                        url: "{{ route('admin.deleteAccount') }}",
-                        type: "POST",
-                        data: {id: idAccount},
-                        beforeSend: function(){
-                            self.text('Loading ...');
-                        },
-                        success: function(data){
-                            self.text('Delete');
-                            if(data === 'Error' || data === 'Fail'){
-                                alert('Có lỗi xảy ra')
-                            } else {
-                                $('.js-account-'+idAccount).hide();
-                                alert('Xóa tài khoản thành công');
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-@endpush --}}

@@ -29,7 +29,9 @@
         <div class="col-xs-12 col-sm-6 col-md-4">
             <div id="search">
                 <form action="{{ route('user.search') }}"  method="get">
-                    <input type="text" name="search" placeholder="Tìm sản phẩm" >
+                    <input type="text" name="search" placeholder="Tìm sản phẩm" @if(isset($keyword))
+                    value="{{ $keyword }}"
+                @endif>
                     <button type="submit" >Tìm kiếm</button>
                 </form>
             </div>
@@ -38,10 +40,10 @@
             <div class="cart">
                 <div class="discart">
                     <span class="mycart"><a href="{{ route('user.showCart') }}" style="color:black;text-decoration:none">Giỏ hàng:</a></span>
-                    <span class="count_products_cart">0 sản phẩm</span>
+                    <span class="count_products_cart">Danh sách sản phẩm</span>
                 </div>
                 <div class="top-cart-content">
-                    xxx
+                    {{-- xxx --}}
                 </div>
             </div>
         </div>

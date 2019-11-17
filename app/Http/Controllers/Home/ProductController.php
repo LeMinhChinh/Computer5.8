@@ -16,9 +16,12 @@ class ProductController extends HomeController
     {
         $detailPr = $detail->getDataProductById($id);
         $detailPr = \json_decode(json_encode($detailPr),true);
-        // dd($detailPr);
+
+        $similarPr = $detail->getDataSimilar($detailPr['id_tt'],$detailPr['id']);
+        $similarPr = \json_decode(\json_encode($similarPr),true);
 
         $data['detailPr'] = $detailPr;
+        $data['similar'] = $similarPr;
 
         return view('home.product.detail',$data);
     }
@@ -30,7 +33,6 @@ class ProductController extends HomeController
             $data['paginate'] = $listlaptop;
             $listlaptop = json_decode(json_encode($listlaptop),true);
             $data['listlaptop'] = $listlaptop['data'] ?? [];
-            // dd($data['listlaptop']);
             $laptop = Category::find($idtype);
 
             $data['laptop'] = $laptop;

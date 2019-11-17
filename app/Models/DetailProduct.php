@@ -25,7 +25,6 @@ class DetailProduct extends Model
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
-                    // ->where('p.status',1)
                     ->orderBy('created_at','DESC')
                     ->take(6)
                     ->get();
@@ -35,7 +34,7 @@ class DetailProduct extends Model
     public function getDataProductById($id)
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*','p.price','p.percent','p.promo_price','p.image','p.name','s.*','t.type','tt.name_type','t.id AS id_typepr')
+                    ->select('dp.*','p.price','p.percent','p.promo_price','p.image','p.name','s.*','t.type','tt.name_type','t.id AS id_typepr','tt.id AS id_tt')
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
@@ -48,7 +47,7 @@ class DetailProduct extends Model
     public function getAllDataLaptop()
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu')
+                    ->select('dp.*','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu','tt.id AS id_tt')
                     ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
@@ -62,7 +61,7 @@ class DetailProduct extends Model
     public function getAllDataPC()
     {
         $data = DB::table('detail_product AS dp')
-                    ->select('dp.*','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu')
+                    ->select('dp.*','p.price','p.promo_price','tt.id_type','p.image','p.name','s.color','s.ram','s.cpu','tt.id AS id_tt')
                     ->join('specification AS s','s.id','=','dp.id_specification')
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('type_trade AS tt','tt.id','=','p.id_typetrade')
@@ -128,7 +127,7 @@ class DetailProduct extends Model
                     ->where('p.name', 'like', '%'.$keyword.'%')
                     ->where('tt.id_type',1)
                     ->orderBy('dp.id','ASC')
-                    ->paginate(15);
+                    ->paginate(10);
         return $data;
     }
 
@@ -144,7 +143,7 @@ class DetailProduct extends Model
                     ->where('p.name', 'like', '%'.$keyword.'%')
                     ->where('tt.id_type',2)
                     ->orderBy('dp.id','ASC')
-                    ->paginate(15);
+                    ->paginate(10);
         return $data;
     }
 
@@ -202,6 +201,20 @@ class DetailProduct extends Model
                     ->join('product AS p','p.id','=','dp.id_product')
                     ->join('specification AS s','s.id','=','dp.id_specification')
                     ->where('p.name','like','%'.$keyword.'%')
+                    ->get();
+        return $data;
+    }
+
+    public function getDataSimilar($idtt,$id)
+    {
+        $data = DB::table('detail_product AS dp')
+                    ->select('dp.*','p.name','p.image','p.id_typetrade','s.ram','s.cpu','s.color','p.price','p.promo_price')
+                    ->join('product AS p','p.id','=','dp.id_product')
+                    ->join('specification AS s','s.id','=','dp.id_specification')
+                    ->where('p.id_typetrade',$idtt)
+                    ->where('dp.id','<>', $id)
+                    ->orderBy('p.promo_price','DESC')
+                    ->take(4)
                     ->get();
         return $data;
     }

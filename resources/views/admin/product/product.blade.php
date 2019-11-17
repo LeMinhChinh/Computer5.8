@@ -22,7 +22,7 @@
 
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                 <a href="{{ route('admin.createProduct') }}" class="btn btn-primary">New Product</a>
                 <a href="{{ route('admin.product') }}" class="btn btn-primary">View All</a>
             </div>

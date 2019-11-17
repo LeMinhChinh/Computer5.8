@@ -37,15 +37,15 @@ class HomeController extends Controller
     public function home(Request $request, Category $cate, Trademark $trade, Product $product,DetailProduct $detail)
     {
         $data = [];
-        $lstHotProduct = $detail->getAllDataByCreateAt();
-        $lstHotProduct = json_decode(json_encode($lstHotProduct),true);
-        // dd($lstHotProduct);
 
         $lstCate = $cate->getAllDataCate();
         $lstCate = json_decode(json_encode($lstCate),true);
 
         $lstName = $cate->getDataName();
         $lstName = json_decode(json_encode($lstName),true);
+
+        $lstHotProduct = $detail->getAllDataByCreateAt();
+        $lstHotProduct = json_decode(json_encode($lstHotProduct),true);
 
         $lstLaptop = $detail->getAllDataLaptop();
         $lstLaptop = json_decode(json_encode($lstLaptop),true);

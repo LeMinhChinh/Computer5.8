@@ -13,7 +13,7 @@ class User extends Model
     {
         $data = DB::table('account AS a')
                     ->select('a.*')
-                    ->get();
+                    ->paginate(10);
         return $data;
     }
 

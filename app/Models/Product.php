@@ -18,7 +18,7 @@ class Product extends Model
                     ->join('trademark AS tm','tm.id','=','tt.id_trade')
                     ->orderBy('p.id','ASC')
                     ->where('p.name', 'like', '%'.$keyword.'%')
-                    ->paginate(15);
+                    ->paginate(10);
         return $data;
     }
 

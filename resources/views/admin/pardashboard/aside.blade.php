@@ -1,4 +1,18 @@
 <ul class="sidebar navbar-nav">
+    <li class="nav-item">
+        <div id="search" style="margin:5px 3px;">
+            <form action="{{ route('user.search') }}"  method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Searching for...">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </li>
     <li class="nav-item active">
         <a class="nav-link" href="{{ route('admin.dashboard') }}">
         <i class="fas fa-fw fa-home"></i>

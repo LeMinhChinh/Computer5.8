@@ -95,8 +95,9 @@
                 @endforeach
             </tbody>
         </table>
-        {{-- {{ $paginate->appends(request()->query())->links() }} --}}
-        {{-- {{ $paginate->links() }} --}}
+        <div style="margin-left:45%">
+            {{ $paginate->links() }}
+        </div>
     </div>
 @endsection
 

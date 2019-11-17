@@ -13,9 +13,11 @@ class BillController extends Controller
     {
         $data = [];
         $orderCart = $order->getAllData();
-        $orderCart = \json_decode(\json_encode($orderCart),true);
+        $data['paginate'] = $orderCart;
+        $orderCart = \json_decode(json_encode($orderCart),true);
 
-        $data['order'] = $orderCart;
+        $data['order'] = $orderCart['data'] ?? [];
+
         $data['updateSuccess'] = $request->session()->get('updateSuccess');
         return view('admin.bill.billorder',$data);
     }
